@@ -11,6 +11,7 @@ using WinAppDemo.Forms;
 using WinAppDemo.Db.Base;
 using WinAppDemo.Db.Model;
 using System.Data.SQLite;
+using WinAppDemo.tools;
 
 namespace WinAppDemo.Controls
 {
@@ -263,7 +264,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
                         using (SqliteDbContext context = new SqliteDbContext())
                         {
                             this.dataGridView2.Rows.AddRange(
@@ -290,7 +291,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
                         using (SqliteDbContext context = new SqliteDbContext())
                         {
                             this.dataGridView2.Rows.AddRange(
@@ -318,7 +319,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
                         using (SqliteDbContext context = new SqliteDbContext())
                         {
                             this.dataGridView2.Rows.AddRange(
@@ -537,7 +538,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称, WXMessage.wxID as 微信账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like 'wxid_%' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
@@ -558,7 +559,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXMessage.wxID as 群聊账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like '%@chatroom' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
@@ -579,7 +580,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXMessage.wxID as 公众号账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like 'gh_%' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
@@ -601,7 +602,7 @@ namespace WinAppDemo.Controls
                         panel3.Dock = DockStyle.Fill;
 
                         this.dataGridView2.Rows.Clear();
-                        this.richTextBox1.Clear();
+                        this.richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXSns.wxID as 微信账号, count(WXSns.wxID) as 朋友圈条数 from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID and WXAddressBook.type=3 group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
@@ -658,7 +659,7 @@ namespace WinAppDemo.Controls
 
             using (SqliteDbContext context = new SqliteDbContext())
             {
-                richTextBox1.Clear();
+                richTextBoxEx1.Clear();
                 string nickName = this.dataGridView2.Rows[e.RowIndex].Cells[0].Value as string;
                 WxFriend friend = context.WxFriends.FirstOrDefault(f => f.NickName == nickName);//仅查找一条数据
                 WxAccount account = context.WxAccounts.FirstOrDefault(a => a.Id == 1);
@@ -679,13 +680,13 @@ namespace WinAppDemo.Controls
                     {
                         if (m.IsSend == 1)
                         {
-                            richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
-                            richTextBox1.SelectionColor = Color.DimGray;
+                            richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Right;
+                            richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                            richTextBox1.AppendText("(");
-                            richTextBox1.AppendText($"{account.NickName}");
-                            richTextBox1.AppendText(")");
-                            richTextBox1.AppendText($"{account.WxId}");
+                            richTextBoxEx1.AppendText("(");
+                            richTextBoxEx1.AppendText($"{account.NickName}");
+                            richTextBoxEx1.AppendText(")");
+                            richTextBoxEx1.AppendText($"{account.WxId}");
 
 
                             if (System.IO.File.Exists(@"D:\UDisk\avator" + account.AvatarPath)) //判断文件是否存在
@@ -696,19 +697,19 @@ namespace WinAppDemo.Controls
                                 Clipboard.SetDataObject(bmp);
                                 DataFormats.Format dataFormat =
                                 DataFormats.GetFormat(DataFormats.Bitmap);
-                                if (richTextBox1.CanPaste(dataFormat))
-                                    richTextBox1.Paste(dataFormat);
+                                if (richTextBoxEx1.CanPaste(dataFormat))
+                                    richTextBoxEx1.Paste(dataFormat);
                              }
-                            richTextBox1.AppendText("\n");
-                            richTextBox1.SelectionColor = Color.Red;
-                            richTextBox1.AppendText($"{m.Content}\n");
-                            richTextBox1.AppendText($"{m.CreateTime}\n\n\n");
+                            richTextBoxEx1.AppendText("\n");
+                            richTextBoxEx1.SelectionColor = Color.Red;
+                            //richTextBoxEx1.AppendText($"{m.Content}\n");
+                            //richTextBoxEx1.AppendText($"{m.CreateTime}\n\n\n");
 
                         }
                         else
                         {
-                            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                            richTextBox1.SelectionColor = Color.DimGray;
+                            richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                            richTextBoxEx1.SelectionColor = Color.DimGray;
                             if (System.IO.File.Exists(@"D:\UDisk\avator" + account.AvatarPath)) //判断文件是否存在
                             {
                                 System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\UDisk\avator" + friend.AvatarPath);
@@ -716,60 +717,66 @@ namespace WinAppDemo.Controls
                                 Clipboard.SetDataObject(bmp);
                                 DataFormats.Format dataFormat =
                                 DataFormats.GetFormat(DataFormats.Bitmap);
-                                if (richTextBox1.CanPaste(dataFormat))
-                                    richTextBox1.Paste(dataFormat);
+                                if (richTextBoxEx1.CanPaste(dataFormat))
+                                    richTextBoxEx1.Paste(dataFormat);
                             }
-                            richTextBox1.AppendText("(");
-                            richTextBox1.AppendText($"{friend.NickName}");
-                            richTextBox1.AppendText(")");
-                            richTextBox1.AppendText($"{m.WxId}\n");
+                            richTextBoxEx1.AppendText("(");
+                            richTextBoxEx1.AppendText($"{friend.NickName}");
+                            richTextBoxEx1.AppendText(")");
+                            richTextBoxEx1.AppendText($"{m.WxId}\n");
 
-                            richTextBox1.SelectionColor = Color.Blue;
-                            richTextBox1.AppendText($"{m.Content}\n");
-                            richTextBox1.AppendText($"{m.CreateTime}\n\n\n");
+                            richTextBoxEx1.SelectionColor = Color.Blue;
+
 
                         }
+                        //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
+                        if (string.IsNullOrEmpty(m.Path.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                        {
+                            SelectUrl.print_msg_or_url(m.Content, richTextBoxEx1);//该方法在打印message内容的同时能够识别url
+                            //Console.WriteLine("是对话或者链接："+m.Content);
+                        }
+                        else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                        {
+                            //Console.WriteLine("文件类型：" + m.Content);
+                            SelectUrl.print_file(m.Path, richTextBoxEx1);
+                        }
+                        richTextBoxEx1.AppendText($"{m.CreateTime}\n\n\n");
+                        richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
 
-                        richTextBox1.SelectionBackColor = Color.WhiteSmoke;
-                        // richTextBox1.AppendText($"{m.Content}\n\n");
+
                     });
                 }
                 else if (Name == "朋友圈")
                 {
-                    SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID,nickname,type,content,createTime from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID order by createTime;", Program.m_mainform.g_conn);
-                    DataTable dt1 = new DataTable();
-                    mAdapter1.Fill(dt1);                
+                    var sns = context.WxSns
+                          .Where(s => s.WxId == friend.WxId)
+                          .OrderBy(s => s.CreateTime)
+                          .ToList();
 
-                    int count = dt1.Rows.Count;
+                    sns.ForEach(s =>
+                    {
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
+                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\UDisk\avator" + friend.AvatarPath);
+                        Bitmap bmp = new Bitmap(img, 25, 22);
+                        Clipboard.SetDataObject(bmp);
+                        DataFormats.Format dataFormat =
+                        DataFormats.GetFormat(DataFormats.Bitmap);
+                        if (richTextBoxEx1.CanPaste(dataFormat))
+                            richTextBoxEx1.Paste(dataFormat);
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText($"{friend.NickName}");
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText($"{s.WxId}\n");
 
-                    for (int i = 0; i < count; i++)
-                    { 
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                        richTextBox1.SelectionColor = Color.DimGray;
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract\com.tencent.mm\MicroMsg\83ed8b966b0f9a2df369b6e6fd832e71\avatar" + friend.AvatarPath)) //判断文件是否存在
-                        {
-                            System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract\com.tencent.mm\MicroMsg\83ed8b966b0f9a2df369b6e6fd832e71\avatar" + friend.AvatarPath);
-                            Bitmap bmp = new Bitmap(img, 25, 22);
-                            Clipboard.SetDataObject(bmp);
-                            DataFormats.Format dataFormat =
-                            DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat))
-                                richTextBox1.Paste(dataFormat);
-                        }
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToInt32(dt1.Rows[i]["wxID"])+"\n");
-
-                        richTextBox1.SelectionColor = Color.Blue;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"])+"\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"])+"\n\n\n\n");
+                        richTextBoxEx1.SelectionColor = Color.Blue;
+                        richTextBoxEx1.AppendText($"{s.Content}\n");
+                        richTextBoxEx1.AppendText($"{s.CreateTime}\n\n\n\n");
 
 
-                        richTextBox1.SelectionBackColor = Color.WhiteSmoke;
+                        richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
 
-                    }
-                    
+                    });
                 }
             }
 
@@ -816,7 +823,7 @@ namespace WinAppDemo.Controls
                 return;
             }
            
-            richTextBox1.Clear();
+            richTextBoxEx1.Clear();
             string wxID = this.dataGridView4.Rows[e.RowIndex].Cells[1].Value as string;            
 
             if (Name == "朋友圈")
@@ -830,8 +837,8 @@ namespace WinAppDemo.Controls
 
                 for (int i = 0; i < count; i++)
                 {
-                    richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                    richTextBox1.SelectionColor = Color.DimGray;
+                    richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                    richTextBoxEx1.SelectionColor = Color.DimGray;
                     if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]))) //判断文件是否存在
                     {
                         System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]));
@@ -839,18 +846,18 @@ namespace WinAppDemo.Controls
                         Clipboard.SetDataObject(bmp);
                         DataFormats.Format dataFormat =
                         DataFormats.GetFormat(DataFormats.Bitmap);
-                        if (richTextBox1.CanPaste(dataFormat))
-                            richTextBox1.Paste(dataFormat);
+                        if (richTextBoxEx1.CanPaste(dataFormat))
+                            richTextBoxEx1.Paste(dataFormat);
                     }
-                    richTextBox1.AppendText("(");
-                    richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                    richTextBox1.AppendText(")");
-                    richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                    richTextBoxEx1.AppendText("(");
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                    richTextBoxEx1.AppendText(")");
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                    richTextBox1.SelectionColor = Color.Blue;
-                    richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                    richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
-                    richTextBox1.SelectionBackColor = Color.WhiteSmoke;
+                    richTextBoxEx1.SelectionColor = Color.Blue;
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                    richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
 
                 }
                 if (count > 500)
@@ -869,37 +876,37 @@ namespace WinAppDemo.Controls
                 {
                     if (Convert.ToInt16(dt1.Rows[i]["isSend"]) == 1)
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Right;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
                             System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Red;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Red;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
                     else
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
@@ -908,16 +915,30 @@ namespace WinAppDemo.Controls
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Blue;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Blue;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
-                    richTextBox1.SelectionBackColor = Color.WhiteSmoke;
+                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
+                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
+                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                    {
+                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
+                                                                              //Console.WriteLine("是对话或者链接："+m.Content);
+                    }
+                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                    {
+                        //Console.WriteLine("文件类型：" + m.Content);
+                        SelectUrl.print_file(ph, richTextBoxEx1);
+                    }
+                    
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
+                    richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
                 }
                 if (count > 500)
                     MessageBox.Show("数据加载完成！");
@@ -932,17 +953,18 @@ namespace WinAppDemo.Controls
 
                 int count = dt1.Rows.Count;
 
+
                 for (int i = 0; i < count; i++)
                 {
                     if (Convert.ToInt16(dt1.Rows[i]["isSend"]) == 1)
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Right;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
@@ -950,24 +972,24 @@ namespace WinAppDemo.Controls
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Red;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Red;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
                     else
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
@@ -975,16 +997,30 @@ namespace WinAppDemo.Controls
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Blue;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Blue;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
-                    richTextBox1.SelectionBackColor = Color.WhiteSmoke;
+                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
+                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
+                    
+                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                    {
+                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
+                                                                                                             //Console.WriteLine("是对话或者链接："+m.Content);
+                    }
+                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                    {
+                        SelectUrl.print_file(ph, richTextBoxEx1);
+                    }
+
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
+                    richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
                 }
                 if (count > 500)
                     MessageBox.Show("数据加载完成！");
@@ -1002,13 +1038,13 @@ namespace WinAppDemo.Controls
                 {
                     if (Convert.ToInt16(dt1.Rows[i]["isSend"]) == 1)
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Right;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Right;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
@@ -1016,24 +1052,24 @@ namespace WinAppDemo.Controls
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Red;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Red;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
                     else
                     {
-                        richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                        richTextBox1.SelectionColor = Color.DimGray;
+                        richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
+                        richTextBoxEx1.SelectionColor = Color.DimGray;
 
-                        richTextBox1.AppendText("(");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
-                        richTextBox1.AppendText(")");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
+                        richTextBoxEx1.AppendText("(");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
+                        richTextBoxEx1.AppendText(")");
+                        richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
@@ -1041,20 +1077,72 @@ namespace WinAppDemo.Controls
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
-                            if (richTextBox1.CanPaste(dataFormat1))
-                                richTextBox1.Paste(dataFormat1);
+                            if (richTextBoxEx1.CanPaste(dataFormat1))
+                                richTextBoxEx1.Paste(dataFormat1);
                         }
-                        richTextBox1.AppendText("\n");
-                        richTextBox1.SelectionColor = Color.Blue;
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        richTextBox1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        richTextBoxEx1.AppendText("\n");
+                        richTextBoxEx1.SelectionColor = Color.Blue;
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
-                    richTextBox1.SelectionBackColor = Color.WhiteSmoke;
+                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
+                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
+                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                    {
+                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
+                                                                                                             //Console.WriteLine("是对话或者链接："+m.Content);
+                    }
+                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                    {
+                        //Console.WriteLine("文件类型：" + m.Content);
+                        SelectUrl.print_file(ph, richTextBoxEx1);
+                    }
+
+                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
+                    richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
                 }
                 if (count > 500)
                     MessageBox.Show("数据加载完成！");
 
+            }
+        }
+
+        private void richTextBoxEx1_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            /*
+             设置根目录，从message表的path字段中取出的值诸如：
+             \com.tencent.mm\MicroMsg\9a444f2bffa22236d9e4313dc93683c8\video\1652293005198de450297040.mp4
+             \com.tencent.mm\MicroMsg\9a444f2bffa22236d9e4313dc93683c8\voice2\e1\7a\msg_2216490530198de4502faaa104.amr
+             \tencent\MicroMsg\Download\rcontact.txt
+             但是，这只是一个相对的路径(可以把它称为绝对路径的后一部分)，需要进行拼接形成完整的路径
+             */
+            string baseDir = "D:";//假设baseDir是绝对路径的前一部分
+            string like = e.LinkText;
+            int index = like.IndexOf('\\');//如果链接中含有反斜杠，说明这是一个文件
+            if (index != -1)//如果是文件
+            {//文件
+                string file_dir = string.Format("{0}{1}", baseDir, like.Substring(index));//把前一部分和后一部分拼接成绝对路径
+                //Console.WriteLine(file_dir);
+                string result = WechatLinkFile.display_file(file_dir);//打开文件
+                if (result != "")
+                {
+                    MessageBox.Show(string.Format("{0}{1}\n{2}", "打开文件异常：", file_dir, result));
+                }
+            }
+            else
+            {//如果是url链接
+                try
+                {
+                    int id = like.IndexOf("http");
+                    //Console.WriteLine(like.Substring(id));
+                    WechatLinkFile.display_url(like.Substring(id));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                
             }
         }
     }

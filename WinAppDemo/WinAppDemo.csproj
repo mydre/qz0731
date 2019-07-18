@@ -162,6 +162,12 @@
     <Compile Include="Db\Model\WxMessage.cs" />
     <Compile Include="Db\Model\WxNewFriend.cs" />
     <Compile Include="Db\Model\WxSns.cs" />
+    <Compile Include="Forms\FormGjglEditAj.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGjglEditAj.Designer.cs">
+      <DependentUpon>FormGjglEditAj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormGjglNewAj.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,12 @@
     <Compile Include="Forms\FormGjglZzqx.Designer.cs">
       <DependentUpon>FormGjglZzqx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormGjglZzxxEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGjglZzxxEdit.Designer.cs">
+      <DependentUpon>FormGjglZzxxEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +223,13 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="tools\ChangeAmrToMp3.cs" />
+    <Compile Include="tools\RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="tools\RichTextBoxEx.Designer.cs">
+      <DependentUpon>RichTextBoxEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tools\SelectUrl.cs" />
     <Compile Include="tools\WechatLinkFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -38,8 +38,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.richTextBoxEx1 = new WinAppDemo.tools.RichTextBoxEx();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.WxName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -174,14 +174,25 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.richTextBoxEx1);
             this.panel3.Controls.Add(this.dataGridView4);
-            this.panel3.Controls.Add(this.richTextBox1);
             this.panel3.Controls.Add(this.dataGridView2);
             this.panel3.Location = new System.Drawing.Point(3, 191);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(576, 191);
             this.panel3.TabIndex = 14;
             this.panel3.Visible = false;
+            // 
+            // richTextBoxEx1
+            // 
+            this.richTextBoxEx1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.richTextBoxEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxEx1.Location = new System.Drawing.Point(241, 0);
+            this.richTextBoxEx1.Name = "richTextBoxEx1";
+            this.richTextBoxEx1.Size = new System.Drawing.Size(335, 191);
+            this.richTextBoxEx1.TabIndex = 5;
+            this.richTextBoxEx1.Text = "";
+            this.richTextBoxEx1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxEx1_LinkClicked);
             // 
             // dataGridView4
             // 
@@ -196,16 +207,6 @@
             this.dataGridView4.Size = new System.Drawing.Size(241, 375);
             this.dataGridView4.TabIndex = 4;
             this.dataGridView4.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView4_CellContentClick);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(241, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(335, 191);
-            this.richTextBox1.TabIndex = 3;
-            this.richTextBox1.Text = "";
             // 
             // dataGridView2
             // 
@@ -396,7 +397,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.BindingSource wxFriendBindingSource;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
@@ -414,5 +414,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn WxName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridView dataGridView4;
+        private tools.RichTextBoxEx richTextBoxEx1;
     }
 }

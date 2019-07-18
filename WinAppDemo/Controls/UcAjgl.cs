@@ -11,7 +11,7 @@ using WinAppDemo.Forms;
 using WinAppDemo.Db.Base;
 using WinAppDemo.Db.Model;
 using System.Threading;
-
+using System.Collections;
 namespace WinAppDemo.Controls
 {
     public partial class UcAjgl : UserControl
@@ -27,27 +27,21 @@ namespace WinAppDemo.Controls
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (Program.m_mainform.g_workPath == "")
-            {
-                MessageBox.Show("请先选择工作目录！");
-            }
-            else
-            {
-                //新建案件
-                FormGjglNewAj form = new FormGjglNewAj();
-                string s = form.ShowDialog().ToString();
-                if (s == "Cancel") return;
 
-                Case @case = form.Case;
-                using (var context = new CaseContext())
-                {
-                    context.Cases.Add(@case);
-                    context.SaveChanges();
-                    AppContext.CaseID = @case.CaseId;
-                }
+            //新建案件
+            FormGjglNewAj form = new FormGjglNewAj();
+            string s = form.ShowDialog().ToString();
+            if (s == "Cancel") return;
 
-                Program.m_mainform.AddNewGjalAj();
+            Case @case = form.Case;
+            using (var context = new CaseContext())
+            {
+                context.Cases.Add(@case);
+                context.SaveChanges();
+                AppContext.CaseID = @case.CaseId;
             }
+            Program.m_mainform.AddNewGjalAj();
+            MessageBox.Show("案件添加成功！");
         }
 
         private void UcAjgl_Load(object sender, EventArgs e)
@@ -59,60 +53,54 @@ namespace WinAppDemo.Controls
             }
         }
 
-        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)//为了完成复选框的选中和取消选中
         {
             try
             {
-                AppConfig.getAppConfig().caseId_selected_row = (int)this.dataGridView1.Rows[e.RowIndex].Cells[1].Value;
+                //AppConfig.getAppConfig().caseId_selected_row = (int)this.dataGridView1.Rows[e.RowIndex].Cells[1].Value;
                 DataGridViewCheckBoxCell dgcc = (DataGridViewCheckBoxCell)this.dataGridView1.Rows[e.RowIndex].Cells[0];
                 Boolean flag = Convert.ToBoolean(dgcc.Value);
                 dgcc.Value = flag == true ? false : true;
-
-                Program.m_mainform.g_ajName = (string)dataGridView1.Rows[e.RowIndex].Cells[2].Value;                         
-
             }
             catch (Exception)
             {
             }
-            label5.Text = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[2].Value);
-            label7.Text = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[4].Value);
-            CheckTextLabel.Text = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[6].Value);
-            EquipTextLabel.Text = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[9].Value);
-            CheckTimeTextLabel.Text = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[11].Value); 
         }
 
-        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView1_SelectionChanged(object sender, EventArgs e)//当下一次点击和行和上一次点击的行不一致时，会触发该事件(如果多次点击同一行，则不触发)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 return;
             }
-
             var row = this.dataGridView1.SelectedRows[0];
-            int caseId = (int)row.Cells[1].Value;                       
-
-            //this.label5.Text = caseId.ToString();
-            //   this.label7.Text = row.Cells[1]?.Value?.ToString() ?? string.Empty;
-
+            int caseId = (int)row.Cells[1].Value;
+            AppConfig.getAppConfig().caseId_selected_row = caseId;
             using (var context = new CaseContext())
             {
                 var proofs = context.Proofs.AsNoTracking().Where(p => p.CaseID == caseId).ToList();
                 dataGridView2.DataSource = proofs;
             }
-
+            //为了完成案件的预览展示
+            label5.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[2].Value);
+            label7.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[4].Value);
+            CheckTextLabel.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[6].Value);
+            EquipTextLabel.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[9].Value);
+            CheckTimeTextLabel.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[11].Value);
         }
 
 
 
-        private void button13_Click(object sender, EventArgs e)
+        private void button13_Click(object sender, EventArgs e)//对案件添加证据
         {
             AppConfig ac = AppConfig.getAppConfig();
 
-            if(ac.caseId_selected_row == -1)
+            if (ac.caseId_selected_row == -1)
             {
-                MessageBox.Show("请选择案件","提示");
+                MessageBox.Show("请选择案件", "提示");
                 return;
-            }else if (ac.already_working == false)
+            }
+            else if (ac.already_working == false)
             {
                 DialogResult dr = MessageBox.Show("是否要为编号为" + ac.caseId_selected_row + "的案件添加证据", "提示", MessageBoxButtons.OKCancel);
 
@@ -123,15 +111,16 @@ namespace WinAppDemo.Controls
                 }
                 else if (dr == DialogResult.Cancel)
                 {
-                    ac.caseId_selected_row = -1;
+                    //ac.caseId_selected_row = -1;
                     return;
                 }
 
-            }else
+            }
+            else
             {
-                if(ac.caseId_selected_row != ac.caseId_selected_working)
+                if (ac.caseId_selected_row != ac.caseId_selected_working)
                 {
-                    DialogResult dr = MessageBox.Show("你之前对编号为" + ac.caseId_selected_working + "的案件添加证据(未保存)，是否确定要为编号为" +ac.caseId_selected_row +  "的案件添加证据！", "提示", MessageBoxButtons.OKCancel);
+                    DialogResult dr = MessageBox.Show("你之前对编号为" + ac.caseId_selected_working + "的案件添加证据(未保存)，是否确定要为编号为" + ac.caseId_selected_row + "的案件添加证据？", "提示", MessageBoxButtons.OKCancel);
                     if (dr == DialogResult.OK)
                     {
                         ac.caseId_selected_working = ac.caseId_selected_row;
@@ -139,7 +128,7 @@ namespace WinAppDemo.Controls
                     }
                     else if (dr == DialogResult.Cancel)
                     {
-                        ac.caseId_selected_row = -1;
+                        //ac.caseId_selected_row = -1;
                         return;
                     }
                 }
@@ -157,11 +146,11 @@ namespace WinAppDemo.Controls
 
         }
 
-        private void allCheckedChanged(object sender, EventArgs e)
+        private void allCheckedChanged(object sender, EventArgs e)//为了完成全选和取消全选
         {
             CheckBox c = sender as CheckBox;
             bool allCheck = false;
-            if(c.Checked == true)
+            if (c.Checked == true)
             {
                 allCheck = true;
             }
@@ -173,7 +162,7 @@ namespace WinAppDemo.Controls
             }
         }
 
-        private void DataGrid2_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGrid2_CellClick(object sender, DataGridViewCellEventArgs e)//证据列表前面复选框的选中与取消选中
         {
             try
             {
@@ -186,94 +175,160 @@ namespace WinAppDemo.Controls
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)//对案件进行编辑
         {
-            AppConfig app = AppConfig.getAppConfig();
-
-
-            if (app.caseId_selected_row == -1)
+            AppConfig ac = AppConfig.getAppConfig();
+            if (ac.caseId_selected_row == -1)
             {
-                MessageBox.Show("请选择需要编辑的案件", "提示");
+                MessageBox.Show("请选择要编辑的案件", "提示");
                 return;
             }
-            else if (app.already_working == false)
+            else
             {
-                DialogResult dr = MessageBox.Show("是否要编辑编号为" + app.caseId_selected_row + "的案件", "提示", MessageBoxButtons.OKCancel);
-
+                DialogResult dr = MessageBox.Show("是否对编号为" + ac.caseId_selected_row + "的案件进行编辑", "提示", MessageBoxButtons.OKCancel);
                 if (dr == DialogResult.OK)
                 {
-                    app.caseId_selected_working = app.caseId_selected_row;
-                    app.already_working = true;
+                    ac.caseId_Edited = ac.caseId_selected_row;
+                    //ac.caseId_selected_row = -1;
                 }
                 else if (dr == DialogResult.Cancel)
                 {
-                    app.caseId_selected_row = -1;
+                    //ac.caseId_selected_row = -1;
                     return;
                 }
-
             }
-            else
-            {
-                if (app.caseId_selected_row != app.caseId_selected_working)
-                {
-                    DialogResult dr = MessageBox.Show("你之前对编号为" + app.caseId_selected_working + "的案件编辑(未保存)，是否确定要为编号为" + app.caseId_selected_row + "的案件进行编辑！", "提示", MessageBoxButtons.OKCancel);
-                    if (dr == DialogResult.OK)
-                    {
-                        app.caseId_selected_working = app.caseId_selected_row;
-                        AppContext.setInstanceNull();
-                    }
-                    else if (dr == DialogResult.Cancel)
-                    {
-                        app.caseId_selected_row = -1;
-                        return;
-                    }
-
-                }
-                app.caseId_selected_row = -1;
-
-                FormGjglNewAj form = new FormGjglNewAj();
-                form.ShowDialog();          
-            }
-
+            FormGjglEditAj form = new FormGjglEditAj();
+            form.ShowDialog();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)//删除案件(每个被删除案件的前面的复选框要打勾)
         {
-            AppConfig app = AppConfig.getAppConfig();
-            if(app.caseId_selected_row==-1)
+            ArrayList selectedCaseIds = new ArrayList();
+            int rc = dataGridView1.RowCount;
+
+            for (int i = 0; i < rc; i++)
             {
-                MessageBox.Show("请选择需要删除的案件");
-                    return;
+                bool selected = Convert.ToBoolean(this.dataGridView1.Rows[i].Cells[0].Value);
+                if (selected)
+                {
+                    selectedCaseIds.Add(this.dataGridView1.Rows[i].Cells[1].Value);
+                    //Console.WriteLine((this.dataGridView1.Rows[i].Cells[1].Value));
+                }
+            }
+            int deleteAmount = selectedCaseIds.Count;
+            if (deleteAmount == 0)
+            {
+                MessageBox.Show("请在你想要删除的案件前面打勾！");
             }
             else
             {
-                DialogResult RSS = MessageBox.Show(this, "确定要删除选中行数据码？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                switch (RSS)
+                string st = string.Format("是否要删除编号为：{0}", selectedCaseIds[0]);
+                for (int i = 1; i < deleteAmount; i++)
                 {
-                    case DialogResult.Yes:
-                        for (int i = this.dataGridView1.SelectedRows.Count; i > 0; i--)
+                    st += string.Format("、{0}", selectedCaseIds[i]);
+                }
+                st += " 的案件?";
+                DialogResult RSS = MessageBox.Show(this, st, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (RSS == DialogResult.Yes)
+                {//开始访问数据库
+                    using (CaseContext caseContext = new CaseContext())
+                    {
+                        for (int i = 0; i < deleteAmount; i++)
                         {
-                            int ID = Convert.ToInt32(dataGridView1.SelectedRows[i - 1].Cells[0].Value);
-                            dataGridView1.Rows.Remove(dataGridView1.SelectedRows[i - 1]);
-                            //使用获得的ID删除数据库的数据
-                           
-
-                            
-                            using (SqliteDbContext context = new SqliteDbContext())
+                            int caseId = Convert.ToInt32(selectedCaseIds[i]);
+                            var Caseinfo = caseContext.Cases.FirstOrDefault(c => c.CaseId == caseId);
+                            if (Caseinfo != null)
                             {
-                                var Caseinfo = context.Cases.FirstOrDefault(c => c.CaseId == ID);
-                                if(Caseinfo!=null)
-                                {
-                                    var result = context.Cases.Remove(Caseinfo);
-                                }
+                                caseContext.Cases.Remove(Caseinfo);
+                                var proofs = caseContext.Proofs.Where(p => p.CaseID == caseId);
+                                caseContext.Proofs.RemoveRange(proofs);//删除案件的同时，级联删除该案件对应的所有证据
                             }
-                           
                         }
-                        break;
-                    case DialogResult.No:
-                        break;
+                        caseContext.SaveChanges();
+                    }
+                    Program.m_mainform.AddNewGjalAj();
+                    MessageBox.Show("删除案件成功！");
                 }
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)//对某一个案件的证据进行删除
+        {
+            ArrayList selectedProofIds = new ArrayList();
+            int rc = dataGridView2.RowCount;
+            for (int i = 0; i < rc; i++)
+            {
+                bool selected = Convert.ToBoolean(this.dataGridView2.Rows[i].Cells[0].Value);
+                if (selected)
+                {
+                    selectedProofIds.Add(this.dataGridView2.Rows[i].Cells[1].Value);
+                }
+            }
+            int deleteAmount = selectedProofIds.Count;
+            if (deleteAmount == 0)
+            {
+                MessageBox.Show("请在你想要删除的证据前面打勾！");
+            }
+            else
+            {
+                string st = string.Format("是否要删除编号为：{0}", selectedProofIds[0]);
+                for (int i = 1; i < deleteAmount; i++)
+                {
+                    st += string.Format("、{0}", selectedProofIds[i]);
+                }
+                st += " 的证据?";
+                DialogResult RSS = MessageBox.Show(this, st, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (RSS == DialogResult.Yes)
+                {//开始访问数据库
+                    using (CaseContext caseContext = new CaseContext())
+                    {
+                        for (int i = 0; i < deleteAmount; i++)
+                        {
+                            int proofId = Convert.ToInt32(selectedProofIds[i]);
+                            var ProofInfo = caseContext.Proofs.FirstOrDefault(p => p.ProofId == proofId);
+                            if (ProofInfo != null)
+                            {
+                                caseContext.Proofs.Remove(ProofInfo);
+                            }
+                        }
+                        caseContext.SaveChanges();
+                    }
+                    Program.m_mainform.AddNewGjalAj();
+                    MessageBox.Show("删除证据成功！");
+                }
+            }
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)//证据列表
+        {
+            if (dataGridView2.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var row = this.dataGridView2.SelectedRows[0];
+            int proofId = (int)row.Cells[1].Value;
+            AppConfig ac = AppConfig.getAppConfig();
+            ac.proofId_selected = proofId;
+        }
+
+        private void button12_Click(object sender, EventArgs e)//对某一个案件的证据进行编辑
+        {
+            AppConfig ac = AppConfig.getAppConfig();
+            if (ac.proofId_selected == -1)
+            {
+                MessageBox.Show("请选择要编辑的证据", "提示");
+                return;
+            }
+            else
+            {
+                DialogResult dr = MessageBox.Show("是否对编号为" + ac.proofId_selected + "的证据进行编辑", "提示", MessageBoxButtons.OKCancel);
+                if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            FormGjglZzxxEdit form = new FormGjglZzxxEdit();
+            form.ShowDialog();
         }
     }
 }
