@@ -66,5 +66,10 @@ namespace WinAppDemo.Controls
             AppContext.GetInstance().m_ucZjtq_sj.Controls.Clear();
             AppContext.GetInstance().m_ucZjtq_sj.Controls.Add(AppContext.GetInstance().m_ucZjtq_sj_ljcg);
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

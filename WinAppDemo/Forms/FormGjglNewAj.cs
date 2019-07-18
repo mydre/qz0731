@@ -23,11 +23,10 @@ namespace WinAppDemo.Forms
 
             textBox1.Text = "案件" +DateTime.Now.ToString("yyyyMMddHHmmss");                   
 
-            textBox2.Text = Guid.NewGuid().ToString();
-
-            Program.m_mainform.g_workPath += "\\"+ textBox1.Text;
+            textBox2.Text = Guid.NewGuid().ToString();           
+            
             Program.m_mainform.g_ajName = textBox1.Text;
-
+           
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
@@ -52,6 +51,7 @@ namespace WinAppDemo.Forms
         {
             this.Close();
             //MessageBox.Show("取消");
+           
         }
 
         delegate void MyDelegate();

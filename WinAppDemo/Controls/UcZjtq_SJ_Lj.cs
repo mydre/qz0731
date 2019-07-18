@@ -45,6 +45,7 @@ namespace WinAppDemo.Controls
             //PreProcess.Start();
             //PreProcess.WaitForExit();
 
+
             string filename=Application.StartupPath + "\\phoneModel.txt";
             //判断目标文件是否存在
             bool flag = File.Exists(filename);
@@ -54,11 +55,17 @@ namespace WinAppDemo.Controls
                 string[] sArray = Str.Split('/');
 
                 Program.m_mainform.g_zjName = sArray[1].Replace("-", "") + DateTime.Now.ToString("yyyyMMddHHmmss");
-                Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_zjName;
+                Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
 
-               // File.Delete(filename);
-            }
+                // File.Delete(filename);
 
+                //创建案件目录结构
+                Directory.CreateDirectory(Program.m_mainform.g_workPath);
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
+            } 
         }
     }
 }

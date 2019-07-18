@@ -100,7 +100,7 @@ namespace WinAppDemo.Forms
 
             //            TreeNode node13 = new TreeNode("聊天记录");
             //            node1.Nodes.Add(node13);
-            //            TreeNode node131 = new TreeNode("好友");
+            //            TreeNode node131 = new TreeNode("好友聊天");
             //            node13.Nodes.Add(node131);
             //            TreeNode node132 = new TreeNode("群聊");
             //            node13.Nodes.Add(node132);
@@ -119,9 +119,166 @@ namespace WinAppDemo.Forms
 
             //  treeView2.ExpandAll();
 
+            long Num_WXAccount = 0;
+            long Num_WXChatroom =0;
+            long Num_WXChatroomList = 0;
+            long Num_WXMessage = 0;
+            long Num_WXNewFriend = 0;
+            long Num_WXSns = 0;
+            long Num_WXAddressBook = 0;
+
             string keyword=textBox1.Text;
+            int iKeyword = -9999;
+            try
+            {
+                iKeyword = Convert.ToInt32(keyword);
+            }
+            catch
+            { }
 
 
+            string SQLCommand = string.Empty;
+            SQLCommand = string.Format(" SELECT * FROM WXAccount WHERE wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR accountID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR phoneNumber LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR sign LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR nickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR email LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR QQid LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR avatarPath LIKE '%{0}%'", keyword);
+
+
+            SQLiteCommand cmdSelect = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect.ExecuteNonQuery();
+            SQLiteDataReader reader = cmdSelect.ExecuteReader();
+            reader.Read();
+            try
+            { Num_WXAccount = reader.GetInt32(0); }
+            catch
+            { }
+            reader.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXAddressBook WHERE wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR type ={0}", iKeyword);
+            SQLCommand += string.Format(" OR accountID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR phoneNumber LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR sign LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR nickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR sex LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR remark LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR description LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR avatarPath LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR chatFrom LIKE '%{0}%'", keyword);
+
+            SQLiteCommand cmdSelect1 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect1.ExecuteNonQuery();
+            SQLiteDataReader reader1 = cmdSelect1.ExecuteReader();
+            reader1.Read();
+            try
+            { Num_WXAddressBook = reader1.GetInt32(0); }
+            catch
+            { }
+            reader1.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXChatroom WHERE groupID LIKE '%{0}%'", keyword);            
+            SQLCommand += string.Format(" OR name LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR adminWxID LIKE '%{0}%'", keyword);            
+            SQLCommand += string.Format(" OR adminNickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR meNickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR groupNum ={0}", iKeyword);
+            SQLCommand += string.Format(" OR checkinType ={0}", iKeyword);
+
+            SQLiteCommand cmdSelect2 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect2.ExecuteNonQuery();
+            SQLiteDataReader reader2 = cmdSelect2.ExecuteReader();
+            reader2.Read();
+            try
+            {
+                Num_WXChatroom = reader2.GetInt32(0);
+            }
+            catch
+            { }            
+            reader2.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXChatroomList WHERE groupID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR nickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR groupNickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR sign LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR avatarPath LIKE '%{0}%'", keyword);
+
+            SQLiteCommand cmdSelect3 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect3.ExecuteNonQuery();
+            SQLiteDataReader reader3 = cmdSelect3.ExecuteReader();
+            reader3.Read();
+            try
+            {   Num_WXChatroomList = reader3.GetInt32(0);       }
+            catch
+            {
+            }
+            reader3.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXMessage WHERE wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR createTime LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR content LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR path LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR type ={0}", iKeyword);
+            SQLCommand += string.Format(" OR isSend ={0}", iKeyword);
+            SQLCommand += string.Format(" OR status ={0}", iKeyword);
+
+            SQLiteCommand cmdSelect4 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect4.ExecuteNonQuery();
+            SQLiteDataReader reader4 = cmdSelect4.ExecuteReader();
+            reader4.Read();
+            try
+            { Num_WXMessage = reader4.GetInt32(0);
+            }
+            catch
+            {
+            }
+            reader4.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXSns WHERE wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR createTime LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR content LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR comment LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR type ={0}", iKeyword);            
+
+            SQLiteCommand cmdSelect5 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect5.ExecuteNonQuery();
+            SQLiteDataReader reader5 = cmdSelect5.ExecuteReader();
+            reader5.Read();
+            try
+            { Num_WXSns = reader5.GetInt32(0);
+            }
+            catch
+            {
+            }
+            reader5.Close();
+
+            SQLCommand = string.Format(" SELECT * FROM WXNewFriend WHERE wxID LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR nickname LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR sex LIKE '%{0}%'", keyword);            
+            SQLCommand += string.Format(" OR sign LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR remark LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR avatarPath LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR description LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR contentVerify LIKE '%{0}%'", keyword);
+            SQLCommand += string.Format(" OR lastModifiedTime LIKE '%{0}%'", keyword); 
+
+            SQLiteCommand cmdSelect6 = new SQLiteCommand(SQLCommand, Program.m_mainform.g_conn);
+            cmdSelect6.ExecuteNonQuery();
+            SQLiteDataReader reader6 = cmdSelect6.ExecuteReader();
+            reader6.Read();
+            try
+            { Num_WXNewFriend = reader6.GetInt32(0); }
+            catch
+            { }
+            reader6.Close();
 
             Program.m_mainform.AddNewGjalZs();
             this.Close();
@@ -183,7 +340,7 @@ namespace WinAppDemo.Forms
                             node12.Nodes.Add(node121);
                             TreeNode node122 = new TreeNode("公众号");
                             node12.Nodes.Add(node122);
-                            TreeNode node123 = new TreeNode("群聊"); 
+                            TreeNode node123 = new TreeNode("群"); 
                             node12.Nodes.Add(node123);
                             TreeNode node124 = new TreeNode("应用程序"); 
                             node12.Nodes.Add(node124);
@@ -193,11 +350,11 @@ namespace WinAppDemo.Forms
 
                         TreeNode node13 = new TreeNode("聊天记录");
                         node1.Nodes.Add(node13);
-                            TreeNode node131 = new TreeNode("好友");
+                            TreeNode node131 = new TreeNode("好友聊天");
                             node13.Nodes.Add(node131);
                             TreeNode node132 = new TreeNode("群聊");
                             node13.Nodes.Add(node132);
-                            TreeNode node133 = new TreeNode("公众号");
+                            TreeNode node133 = new TreeNode("公众号讯息");
                             node13.Nodes.Add(node133);
 
                         TreeNode node14 = new TreeNode("朋友圈");

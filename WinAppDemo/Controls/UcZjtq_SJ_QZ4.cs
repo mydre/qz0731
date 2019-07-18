@@ -116,6 +116,7 @@ namespace WinAppDemo.Controls
         {
             FormGjglBf form = new FormGjglBf();
             form.ShowDialog();
+            
         }
     }
 }

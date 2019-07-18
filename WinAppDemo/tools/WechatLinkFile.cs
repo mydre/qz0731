@@ -23,9 +23,9 @@ namespace WinAppDemo.tools
                 try
                 {
                     //打开WORD
-                    Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
-                    app.Visible = true;
-                    app.Documents.Open(path_filename);
+                    //Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+                    //app.Visible = true;
+                    //app.Documents.Open(path_filename);
                 }
                 catch (Exception ex)
                 {
