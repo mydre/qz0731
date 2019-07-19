@@ -60,11 +60,11 @@ namespace WinAppDemo.Controls
                 // File.Delete(filename);
 
                 //创建案件目录结构
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath);
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath);
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
             } 
         }
     }

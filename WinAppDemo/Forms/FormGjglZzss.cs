@@ -109,10 +109,10 @@ namespace WinAppDemo.Forms
 
             //            TreeNode node14 = new TreeNode("朋友圈");
             //            node1.Nodes.Add(node14);
-            //            TreeNode node141 = new TreeNode("本人的朋友圈");
-            //            node14.Nodes.Add(node141);
-            //            TreeNode node142 = new TreeNode("好友的朋友圈");
-            //            node14.Nodes.Add(node142);
+            ////            TreeNode node141 = new TreeNode("本人的朋友圈");
+            ////            node14.Nodes.Add(node141);
+            ////            TreeNode node142 = new TreeNode("好友的朋友圈");
+            ////            node14.Nodes.Add(node142);
             //        }
             //    }
             //}
@@ -359,10 +359,10 @@ namespace WinAppDemo.Forms
 
                         TreeNode node14 = new TreeNode("朋友圈");
                         node1.Nodes.Add(node14);
-                            TreeNode node141 = new TreeNode("本人的朋友圈");
-                            node14.Nodes.Add(node141);
-                            TreeNode node142 = new TreeNode("好友的朋友圈");
-                            node14.Nodes.Add(node142);
+                            //TreeNode node141 = new TreeNode("本人的朋友圈");
+                            //node14.Nodes.Add(node141);
+                            //TreeNode node142 = new TreeNode("好友的朋友圈");
+                            //node14.Nodes.Add(node142);
                     }
                 }
             }

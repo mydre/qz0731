@@ -35,17 +35,18 @@ namespace WinAppDemo.Controls
             //创建数据库实例，指定文件位置
             Program.m_mainform.g_conn = new SQLiteConnection(dbPath);
             Program.m_mainform.g_conn.Open();
-            SQLiteDataAdapter mAdapter = new SQLiteDataAdapter("select name as 名称,seq as 数量 from sqlite_sequence;", Program.m_mainform.g_conn);//select * from WXAccount
-            
-            DataTable dt = new DataTable();
-            mAdapter.Fill(dt);
+            //SQLiteDataAdapter mAdapter = new SQLiteDataAdapter("select name as 名称,seq as 数量 from sqlite_sequence;", Program.m_mainform.g_conn);//select * from WXAccount
 
-            //绑定数据到DataGridView
-            dataGridView3.DataSource = dt;
+            //DataTable dt = new DataTable();
+            //mAdapter.Fill(dt);
+
+            ////绑定数据到DataGridView
+            //dataGridView3.DataSource = dt;
+            //dataGridView3.Show();
             panel1.Hide();
             panel2.Hide();
             panel3.Hide();
-            dataGridView3.Show();
+            dataGridView3.Hide();
 
             dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
             conn = new SQLiteConnection(dbPath);
@@ -169,10 +170,10 @@ namespace WinAppDemo.Controls
 
                         TreeNode node14 = new TreeNode("朋友圈");
                         node1.Nodes.Add(node14);
-                        TreeNode node141 = new TreeNode("本人的朋友圈");
-                        node14.Nodes.Add(node141);
-                        TreeNode node142 = new TreeNode("好友的朋友圈");
-                        node14.Nodes.Add(node142);
+                        //TreeNode node141 = new TreeNode("本人的朋友圈");
+                        //node14.Nodes.Add(node141);
+                        //TreeNode node142 = new TreeNode("好友的朋友圈");
+                        //node14.Nodes.Add(node142);
                     }
                 }
             }
@@ -374,10 +375,10 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-                       
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select phoneNumber as 手机号,model as 品牌,type as 型号,Android as 安卓版本,IMEI from phoneinfo;", conn);
                         DataTable dt1 = new DataTable();
-                        mAdapter1.Fill(dt1);                        
+                        mAdapter1.Fill(dt1);
                         dataGridView3.DataSource = dt1;
                         dataGridView3.Dock = DockStyle.Fill;
                         dataGridView3.Show();
@@ -388,7 +389,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 姓名,phoneNumber as 手机号, district as 地区,company as 单位,Email as 邮箱,remark as 备注 from Contacts;", conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -403,7 +404,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select phoneNumber as 手机号,content as 内容,datetime as 时间,isSend as 是否接收 from Sms;", conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -418,7 +419,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 联系人,phoneNumber as 手机号,datetime as 时间,duration as 通话时长,type as 接收状态 from Calls;", conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -433,7 +434,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,district as 地区,email as 邮箱,QQid as 关联QQ号 from WXAccount;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -447,7 +448,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,sex as 性别, district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -462,7 +463,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,sex as 性别, district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook where type =3 and wxID like 'wxid_%';", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -476,7 +477,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook where wxID like '%@chatroom';", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -490,7 +491,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook where wxID like 'gh_%';", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -504,7 +505,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook where type =33;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -518,7 +519,7 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Hide();
-
+                        dataGridView3.DataSource = null;
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,accountID as 微信号,phoneNumber as 手机号,sign as 个性签名,nickname as 昵称,sex as 性别, district as 地区,remark as 备注,description as 描述,chatFrom as 共同群聊来源 from WXAddressBook where type!=33 and type!=3 and wxID not like 'wxid_%'and wxID not like 'gh_%'and wxID not like '%@chatroom';", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -529,44 +530,42 @@ namespace WinAppDemo.Controls
                     }
                 case "好友聊天":
                     {
-                        Name = "好友聊天";                   
+                        Name = "好友聊天";
 
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Show();
-
                         panel3.Dock = DockStyle.Fill;
-
-                        this.dataGridView2.Rows.Clear();
-                        this.richTextBoxEx1.Clear();
+                        dataGridView4.Size = dataGridView2.Size;
+                        dataGridView4.Show();
+                        dataGridView4.DataSource = null;
+                        richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称, WXMessage.wxID as 微信账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like 'wxid_%' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView4.DataSource = dt1;
                         dataGridView4.Columns[1].Visible = false;
-                        dataGridView4.Show();
                         break;
                     }
                 case "群聊":
                     {
-                        Name = "群聊";                       
+                        Name = "群聊";
 
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Show();
-
                         panel3.Dock = DockStyle.Fill;
-
-                        this.dataGridView2.Rows.Clear();
-                        this.richTextBoxEx1.Clear();
+                        dataGridView4.Size = dataGridView2.Size;
+                        dataGridView4.Show();
+                        dataGridView4.DataSource = null;
+                        richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXMessage.wxID as 群聊账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like '%@chatroom' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView4.DataSource = dt1;
                         dataGridView4.Columns[1].Visible = false;
-                        dataGridView4.Show();
 
                         break;
                     }
@@ -576,19 +575,18 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Show();
-
                         panel3.Dock = DockStyle.Fill;
-
-                        this.dataGridView2.Rows.Clear();
-                        this.richTextBoxEx1.Clear();
+                        dataGridView4.Size = dataGridView2.Size;
+                        dataGridView4.Show();
+                        dataGridView4.DataSource = null;
+                        richTextBoxEx1.Clear();
 
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXMessage.wxID as 公众号账号, count(WXMessage.wxID) as 消息数量 from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXAddressBook.wxID like 'gh_%' group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
-                        
+
                         dataGridView4.DataSource = dt1;
                         dataGridView4.Columns[1].Visible = false;
-                        dataGridView4.Show();
 
                         break;
                     }
@@ -598,18 +596,17 @@ namespace WinAppDemo.Controls
                         panel1.Hide();
                         panel2.Hide();
                         panel3.Show();
-                        
                         panel3.Dock = DockStyle.Fill;
+                        dataGridView4.Size = dataGridView2.Size;
+                        dataGridView4.Show();
+                        dataGridView4.DataSource = null;
+                        richTextBoxEx1.Clear();
 
-                        this.dataGridView2.Rows.Clear();
-                        this.richTextBoxEx1.Clear();
-
-                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXSns.wxID as 微信账号, count(WXSns.wxID) as 朋友圈条数 from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID and WXAddressBook.type=3 group by WXAddressBook.wxID;", Program.m_mainform.g_conn);
+                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select nickname as 昵称,WXSns.wxID as 微信账号, count(WXSns.wxID) as 朋友圈条数 from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID group by WXAddressBook.wxID;", Program.m_mainform.g_conn);   //and WXAddressBook.type=3
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView4.DataSource = dt1;
                         dataGridView4.Columns[1].Visible = false;
-                        dataGridView4.Show();
 
                         break;
                     }
@@ -618,14 +615,14 @@ namespace WinAppDemo.Controls
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select wxID as 微信账号,nickname as 昵称,sex as 性别,sign as 个性签名, district as 地区,remark as 备注,description as 描述,contentVerify as 好友请求内容,lastModifiedTime as 最后更新时间  from WXNewFriend;", Program.m_mainform.g_conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
-                        dataGridView1.DataSource = dt1;
+                        dataGridView3.DataSource = dt1;
 
                         panel1.Hide();
                         panel3.Hide();
                         panel2.Show();
                         panel2.Dock = DockStyle.Fill;
-                     //   dataGridView1.Dock = DockStyle.Fill;
-                     //   dataGridView1.Show();
+                        dataGridView3.Dock = DockStyle.Fill;
+                        dataGridView3.Show();
                         break;
                     }
                 default:
@@ -828,7 +825,7 @@ namespace WinAppDemo.Controls
 
             if (Name == "朋友圈")
             {
-                string sql = "select WXAddressBook.wxID as WXID,nickname,WXSns.type,content,createTime,comment,supportNum,commentNum,avatarPath from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID and WXSns.wxID='" + wxID + "' order by createTime;";
+                string sql = "select WXAddressBook.wxID as WXID,nickname,WXSns.type as TYPE,content,createTime,comment,supportNum,commentNum,avatarPath from WXSns,WXAddressBook where WXSns.wxID=WXAddressBook.wxID and WXSns.wxID='" + wxID + "' order by createTime;";
                 SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter(sql, Program.m_mainform.g_conn);
                 DataTable dt1 = new DataTable();
                 mAdapter1.Fill(dt1);
@@ -855,7 +852,86 @@ namespace WinAppDemo.Controls
                     richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
                     richTextBoxEx1.SelectionColor = Color.Blue;
-                    richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+                    // richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
+
+
+                    int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);                    
+                    string content = Convert.ToString(dt1.Rows[i]["content"]);
+                    SelectUrl.print_MsgOrUrl(content, type, richTextBoxEx1);
+
+                    //if(type==1)   //图片加载
+                    //{
+                    //    int startindex, endindex;
+                    //    string title = "";
+                    //    string url = "";
+                    //    startindex = content.IndexOf("【文字】");
+                    //    if (startindex == -1)    //没有文字，只有图片
+                    //    {
+                    //        endindex = content.IndexOf("【图片文件】");
+
+                    //        if (endindex >= 0)
+                    //        {
+                    //            for (int j = 0; j < 20; j++)
+                    //            {
+                    //                startindex = content.IndexOf("【图片文件】", endindex + 1, content.Length - endindex - 1);
+                    //                if (startindex > 0)
+                    //                {
+                    //                    url = content.Substring(endindex + 6, startindex - endindex - 6);
+                    //                    //加载图片直接显示
+                    //                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url)) //判断文件是否存在
+                    //                    {
+                    //                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url);
+                    //                        Bitmap bmp = new Bitmap(img, 50, 35);
+                    //                        Clipboard.SetDataObject(bmp);
+                    //                        DataFormats.Format dataFormat =
+                    //                        DataFormats.GetFormat(DataFormats.Bitmap);
+                    //                        if (richTextBoxEx1.CanPaste(dataFormat))
+                    //                            richTextBoxEx1.Paste(dataFormat);
+                    //                    }
+
+                    //                    endindex = startindex;
+                    //                }
+                    //                else
+                    //                {
+                    //                    url = content.Substring(endindex + 6, content.Length - endindex - 6);
+                    //                    //加载图片直接显示
+                    //                    break;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        endindex = content.IndexOf("【图片文件】");
+
+                    //        if (endindex >= 0)
+                    //        {
+                    //            title = content.Substring(startindex + 4, endindex - startindex - 4);
+                    //            richTextBoxEx1.AppendText(title + "\n");
+                    //            for (int j = 0; j < 20; j++)
+                    //            {
+                    //                startindex = content.IndexOf("【图片文件】", endindex + 1, content.Length - endindex - 1);
+                    //                if (startindex > 0)
+                    //                {
+                    //                    url = content.Substring(endindex + 6, startindex - endindex - 6);
+                    //                    //加载图片直接显示
+                    //                    endindex = startindex;
+                    //                }
+                    //                else
+                    //                {
+                    //                    url = content.Substring(endindex + 6, content.Length - endindex - 6);
+                    //                    //加载图片直接显示
+                    //                    break;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+
+                    //    richTextBoxEx1.AppendText("\n");
+                    //}
+                    //else
+                    //    SelectUrl.print_MsgOrUrl(content, type, richTextBoxEx1);
+
                     richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
                     richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
 
@@ -865,7 +941,7 @@ namespace WinAppDemo.Controls
             }
             else if (Name == "好友聊天")
             {
-                string sql = "select WXAddressBook.wxID as WXID,nickname,WXMessage.type,content,isSend,createTime,path,status,avatarPath from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXMessage.wxID not like 'gh_%' and WXMessage.wxID not like '%@chatroom' and WXMessage.wxID='" + wxID + "' order by createTime;";
+                string sql = "select WXAddressBook.wxID as WXID,nickname,WXMessage.type as TYPE,content,isSend,createTime,path,status,avatarPath from WXMessage,WXAddressBook where WXMessage.wxID=WXAddressBook.wxID and WXMessage.wxID not like 'gh_%' and WXMessage.wxID not like '%@chatroom' and WXMessage.wxID='" + wxID + "' order by createTime;";
                 SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter(sql, Program.m_mainform.g_conn);
                 DataTable dt1 = new DataTable();
                 mAdapter1.Fill(dt1);
@@ -894,8 +970,7 @@ namespace WinAppDemo.Controls
                         }
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Red;
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");                    
 
                     }
                     else
@@ -907,7 +982,6 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
-
 
                         if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
@@ -921,22 +995,51 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Blue;
                         //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                        
+                    }
+                    int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
+                    string path= Convert.ToString(dt1.Rows[i]["path"]);
+                    string content = Convert.ToString(dt1.Rows[i]["content"]);
 
-                    }
-                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
-                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
-                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                    if (type==1 && type == 10000 && type == 50 && type == 47 && type == 10002 && type == 64 && type == 50 && type == 570425393)
+                        richTextBoxEx1.AppendText(content + "\n");
+                    else if(type == 436207665)   //红包
                     {
-                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
-                                                                              //Console.WriteLine("是对话或者链接："+m.Content);
+                        int status = Convert.ToInt32(dt1.Rows[i]["status"]);
+                        if(status==3)
+                             richTextBoxEx1.AppendText(content + " （已收）\n");
+                        else if (status == 2)
+                             richTextBoxEx1.AppendText(content + " （未收）\n");
                     }
-                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                    else if (type == 419430449)   //转账
                     {
-                        //Console.WriteLine("文件类型：" + m.Content);
-                        SelectUrl.print_file(ph, richTextBoxEx1);
+                        int startindex, endindex;
+                        string title = "";
+                        string des = "";
+                        startindex = content.IndexOf("<title>");
+                        endindex = content.IndexOf("<des>");
+                        if (startindex >= 0 && endindex > startindex)
+                        {
+                            title = content.Substring(startindex + 7, endindex - startindex - 7);
+                            richTextBoxEx1.AppendText(title + "\n");
+                            des = content.Substring(endindex + 5, content.Length - endindex - 5);
+                            richTextBoxEx1.AppendText(des + "\n");
+                        }
+                        else
+                            richTextBoxEx1.AppendText(content + "\n");
+                        
                     }
-                    
+                    else if (type == 318767153)   //服务通知
+                    {
+                        int status = Convert.ToInt32(dt1.Rows[i]["status"]);
+                        if (status == 3)
+                            richTextBoxEx1.AppendText(content + " （已收）\n");
+                        else if (status == 2)
+                            richTextBoxEx1.AppendText(content + " （未收）\n");
+                    }
+                    else
+                        SelectUrl.print_MsgOrUrl(content, type, path,richTextBoxEx1); 
+                                       
                     richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
                     richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
                 }
@@ -978,8 +1081,7 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Red;
                         //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
-
+                        
                     }
                     else
                     {
@@ -1003,25 +1105,71 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Blue;
                         //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
 
                     }
-                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
-                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
-                    
-                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+
+                    int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
+                    string path = Convert.ToString(dt1.Rows[i]["path"]);
+                    string content = Convert.ToString(dt1.Rows[i]["content"]);
+
+                    if (type == 1 && type == 10000 && type == 50 && type == 47 && type == 10002 && type == 64 && type == 50 && type == 570425393)
+                        richTextBoxEx1.AppendText(content + "\n");
+                    else if (type == 436207665)   //红包
                     {
-                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
-                                                                                                             //Console.WriteLine("是对话或者链接："+m.Content);
+                        int status = Convert.ToInt32(dt1.Rows[i]["status"]);
+                        if (status == 3)
+                            richTextBoxEx1.AppendText(content + " （已收）\n");
+                        else if (status == 2)
+                            richTextBoxEx1.AppendText(content + " （未收）\n");
                     }
-                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                    else if (type == 419430449)   //转账
                     {
-                        SelectUrl.print_file(ph, richTextBoxEx1);
+                        int startindex, endindex;
+                        string title = "";
+                        string des = "";
+                        startindex = content.IndexOf("<title>");
+                        endindex = content.IndexOf("<des>");
+                        if (startindex >= 0 && endindex > startindex)
+                        {
+                            title = content.Substring(startindex + 7, endindex - startindex - 7);
+                            richTextBoxEx1.AppendText(title + "\n");
+                            des = content.Substring(endindex + 5, content.Length - endindex - 5);
+                            richTextBoxEx1.AppendText(des + "\n");
+                        }
+                        else
+                            richTextBoxEx1.AppendText(content + "\n");
+
                     }
+                    else if (type == 318767153)   //服务通知
+                    {
+                        int status = Convert.ToInt32(dt1.Rows[i]["status"]);
+                        if (status == 3)
+                            richTextBoxEx1.AppendText(content + " （已收）\n");
+                        else if (status == 2)
+                            richTextBoxEx1.AppendText(content + " （未收）\n");
+                    }
+                    else
+                        SelectUrl.print_MsgOrUrl(content, type, path, richTextBoxEx1);
 
                     richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
                     richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;
                 }
+
+
+                ////在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
+                //string ph = Convert.ToString(dt1.Rows[i]["path"]);
+
+                //if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
+                //{
+                //    SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
+                //                                                                                         //Console.WriteLine("是对话或者链接："+m.Content);
+                //}
+                //else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
+                //{
+                //    SelectUrl.print_file(ph, richTextBoxEx1);
+                //}
+
+               
                 if (count > 500)
                     MessageBox.Show("数据加载完成！");
             }
@@ -1058,8 +1206,6 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Red;
                         //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
-
                     }
                     else
                     {
@@ -1083,21 +1229,11 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText("\n");
                         richTextBoxEx1.SelectionColor = Color.Blue;
                         //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["content"]) + "\n");
-                        //richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n\n");
+                    }
 
-                    }
-                    //在sqlite的message表里面，有的对话的path字段含有空格，需要使用Replace进行去除
-                    string ph = Convert.ToString(dt1.Rows[i]["path"]);
-                    if (string.IsNullOrEmpty(ph.Replace(" ", "")))//message是单纯的对话消息 或者 是含有url链接的消息
-                    {
-                        SelectUrl.print_msg_or_url(Convert.ToString(dt1.Rows[i]["content"]), richTextBoxEx1);//该方法在打印message内容的同时能够识别url
-                                                                                                             //Console.WriteLine("是对话或者链接："+m.Content);
-                    }
-                    else//说明message是文件类型的消息，这时候应当能够点击链接并打开文件
-                    {
-                        //Console.WriteLine("文件类型：" + m.Content);
-                        SelectUrl.print_file(ph, richTextBoxEx1);
-                    }
+                    int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
+                    if (type==285212721)
+                        SelectUrl.print_MsgOrUrl(Convert.ToString(dt1.Rows[i]["content"]), type, richTextBoxEx1);
 
                     richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["createTime"]) + "\n\n\n");
                     richTextBoxEx1.SelectionBackColor = Color.WhiteSmoke;

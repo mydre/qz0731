@@ -38,7 +38,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.richTextBoxEx1 = new WinAppDemo.tools.RichTextBoxEx();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.WxName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,6 +45,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.richTextBoxEx1 = new WinAppDemo.tools.RichTextBoxEx();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wxIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,8 +56,6 @@
             this.nickNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.districtDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wxFriendBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -68,8 +68,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wxFriendBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wxFriendBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -183,17 +183,6 @@
             this.panel3.TabIndex = 14;
             this.panel3.Visible = false;
             // 
-            // richTextBoxEx1
-            // 
-            this.richTextBoxEx1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.richTextBoxEx1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxEx1.Location = new System.Drawing.Point(241, 0);
-            this.richTextBoxEx1.Name = "richTextBoxEx1";
-            this.richTextBoxEx1.Size = new System.Drawing.Size(335, 191);
-            this.richTextBoxEx1.TabIndex = 5;
-            this.richTextBoxEx1.Text = "";
-            this.richTextBoxEx1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxEx1_LinkClicked);
-            // 
             // dataGridView4
             // 
             this.dataGridView4.AllowUserToAddRows = false;
@@ -204,7 +193,7 @@
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowTemplate.Height = 23;
-            this.dataGridView4.Size = new System.Drawing.Size(241, 375);
+            this.dataGridView4.Size = new System.Drawing.Size(241, 445);
             this.dataGridView4.TabIndex = 4;
             this.dataGridView4.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView4_CellContentClick);
             // 
@@ -282,6 +271,37 @@
             this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Column1.Width = 50;
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(3, -1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(576, 195);
+            this.panel1.TabIndex = 12;
+            // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.RowTemplate.Height = 23;
+            this.dataGridView3.Size = new System.Drawing.Size(576, 563);
+            this.dataGridView3.TabIndex = 15;
+            // 
+            // richTextBoxEx1
+            // 
+            this.richTextBoxEx1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.richTextBoxEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxEx1.Location = new System.Drawing.Point(241, 0);
+            this.richTextBoxEx1.Name = "richTextBoxEx1";
+            this.richTextBoxEx1.Size = new System.Drawing.Size(335, 191);
+            this.richTextBoxEx1.TabIndex = 5;
+            this.richTextBoxEx1.Text = "";
+            this.richTextBoxEx1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxEx1_LinkClicked);
+            // 
             // idDataGridViewTextBoxColumn
             // 
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
@@ -335,26 +355,6 @@
             // 
             this.wxFriendBindingSource.DataSource = typeof(WinAppDemo.Db.Model.WxFriend);
             // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(3, -1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(576, 195);
-            this.panel1.TabIndex = 12;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.RowTemplate.Height = 23;
-            this.dataGridView3.Size = new System.Drawing.Size(576, 563);
-            this.dataGridView3.TabIndex = 15;
-            // 
             // UcZjzs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -378,8 +378,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wxFriendBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wxFriendBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
