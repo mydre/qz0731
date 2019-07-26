@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Collections;
 namespace WinAppDemo
 {
     class AppConfig
@@ -22,6 +22,12 @@ namespace WinAppDemo
         //对证据进行编辑的证据的id
         public int proofId_selected;
         //public int selected_UcAjgl_Aj_rowIndex;
+        //该list存放dataGridView的每行row的cells[1]对应的真正的caseId
+        public ArrayList aList = null;
+        //
+        public int loadDone;
+        //
+        public ArrayList aEvidenceList = null;
 
         private AppConfig()
         {
@@ -31,6 +37,9 @@ namespace WinAppDemo
             this.already_working = false;
             this.caseId_Edited = -1;
             this.proofId_selected = -1;
+            aList = new ArrayList();
+            this.loadDone = -1;
+            aEvidenceList = new ArrayList();
         }
 
         public static AppConfig getAppConfig()
