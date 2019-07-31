@@ -42,6 +42,55 @@ namespace WinAppDemo.Controls
 
         public void startGetData()    //7.8
         {
+            ////获取 短信、联系人、通话记录
+            //Process PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath + " 1";
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\socketPbi.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
+            //PreProcess.WaitForExit();
+
+            //PreProcess = null;
+            //PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath + " 2";
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\socketPbi.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
+            //PreProcess.WaitForExit();
+
+            //PreProcess = null;
+            //PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath + " 3";
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\socketPbi.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
+            //PreProcess.WaitForExit();
+
+
+            ////提微信备份目录
+            //PreProcess = null;
+            //PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles "+Program.m_mainform.g_workPath + "\\mm.db";
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\getAllFilesName.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
+            //PreProcess.WaitForExit();
+
+            ////提微信备份
+            //PreProcess = null;
+            //PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles/2019-06-12_15-01-06/com.tencent.mm.db " + Program.m_mainform.g_workPath + "\\AppBackup";
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\pullFileFromPhone.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
+            //PreProcess.WaitForExit();
+
+
             // MessageBox.Show("此处运行微信中转程序！", "提示", MessageBoxButtons.OKCancel);
 
             //Process PreProcess = new Process();
@@ -56,14 +105,15 @@ namespace WinAppDemo.Controls
             //MessageBox.Show("接着运行微信中转程序！", "提示", MessageBoxButtons.OKCancel);
             ////MessageBox.Show(Application.StartupPath, "提示", MessageBoxButtons.OKCancel);
 
-            //Process PreProcess1 = new Process();
-            //PreProcess1.StartInfo.Arguments = "D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546";  //全路径
-            //PreProcess1.StartInfo.FileName = Application.StartupPath + "\\OnLineRes.exe";
-            //PreProcess1.StartInfo.Verb = "runas";
-            //PreProcess1.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //PreProcess1.Start();
+            //PreProcess = null;
+            //PreProcess = new Process();
+            //PreProcess.StartInfo.Arguments = "D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546";  //全路径
+            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\OnLineRes.exe";
+            //PreProcess.StartInfo.Verb = "runas";
+            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //PreProcess.Start();
 
-            //PreProcess1.WaitForExit(); 
+            //PreProcess.WaitForExit(); 
 
             // Thread.Sleep(10000);
             //timer.Stop();

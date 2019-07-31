@@ -74,6 +74,7 @@ namespace WinAppDemo.Controls
                 return;
             }
             var row = this.dataGridView1.SelectedRows[0];
+            Program.m_mainform.g_ajName = (string)dataGridView1.SelectedRows[0].Cells[2].Value;
             int caseId = (int)row.Cells[1].Value;
             AppConfig.getAppConfig().caseId_selected_row = caseId;
             using (var context = new CaseContext())

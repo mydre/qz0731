@@ -111,7 +111,259 @@ namespace WinAppDemo.tools
             richTextBoxEx1.InsertLink(file_name, real_path);//插入link，第一个参数是文件的名字，第二个参数是文件的路径(第二个参数代表的就是隐藏的text)
             richTextBoxEx1.AppendText("\n");
         }
+        public static void print_file(string title,string mPath, WinAppDemo.tools.RichTextBoxEx richTextBoxEx1)
+        {
+            string path = mPath;
+            string real_path = "";
+            int len = path.Length;
+            int i = 0;
+            while (i < len)//凡是路径中出现一个反斜杠的地方，都要变为两个反斜杠(确保在richtextbox中中文不乱码的同时能够给链接添加隐藏的text)
+            {
+                if (path[i] == '\\') real_path += '\\';
+                real_path += path[i];
+                i++;
+            }
+            int index = path.LastIndexOf('\\');
+            string file_name = path.Substring(index + 1);
+
+            int dot_index = file_name.IndexOf('.');
+            if (dot_index != -1)
+            {
+                string postFix = file_name.Substring(dot_index + 1);
+                string preFix = file_name.Substring(0, dot_index);
+                file_name = string.Format("{0}:{1}", postFix, preFix);
+            }
+
+            richTextBoxEx1.InsertLink(title, real_path);//插入link，第一个参数是文件的名字，第二个参数是文件的路径(第二个参数代表的就是隐藏的text)
+            richTextBoxEx1.AppendText("\n");
+        }
+        public static void print_MsgOrUrl(string content, int type, WinAppDemo.tools.RichTextBoxEx richTextBoxEx1)
+        {
+            int startindex, midindex, endindex;
+            string word = "";
+            string title = "";
+            string url = "";
+            switch (type)
+            {
+                case 285212721:    //公众号链接
+                    startindex = content.IndexOf("<item.title>");
+                    endindex = content.IndexOf("<item.url>");
+                    if (startindex >= 0 && endindex > startindex)
+                        title = content.Substring(startindex + 12, endindex - startindex - 12);
+
+                    startindex = content.IndexOf("<item1.title>");
+                    if (startindex > endindex)
+                        url = content.Substring(endindex + 10, startindex - endindex - 10);
+                    else
+                        url = content.Substring(endindex + 10, content.Length - endindex - 10);
+
+                    richTextBoxEx1.InsertLink(title, url);
+                    richTextBoxEx1.AppendText("\n");
+
+                    for (int j = 1; j < 100; j++)
+                    {
+                        endindex = content.IndexOf("<item" + Convert.ToString(j) + ".url>");
+
+                        if (endindex > startindex)
+                            title = content.Substring(startindex + 13, endindex - startindex - 13);
+                        else
+                            break;
+                        startindex = content.IndexOf("<item" + Convert.ToInt16(j + 1) + ".title>");
+                        if (startindex > endindex)
+                            url = content.Substring(endindex + 11, startindex - endindex - 11);
+                        else
+                            url = content.Substring(endindex + 11, content.Length - endindex - 11);
+                        richTextBoxEx1.InsertLink(title, url);
+                        richTextBoxEx1.AppendText("\n");
+                    }
+                    break;
+                case 3:    //朋友圈网页链接
+                    startindex = content.IndexOf("【文字】");
+                    midindex = content.IndexOf("【标题】");
+                    if (startindex >= 0 && midindex > startindex)
+                        word = content.Substring(startindex + 4, midindex - startindex - 4);
+                    if (word.Length > 0)
+                        richTextBoxEx1.AppendText(word+"\n"); 
+                    endindex = content.IndexOf("【链接URL】");
+                    if (endindex > midindex)
+                    {
+                        title = content.Substring(midindex + 4, endindex - midindex - 4);
+                        url = content.Substring(endindex + 7, content.Length - endindex - 7);
+                    }
+
+                    richTextBoxEx1.InsertLink(title, url);
+                    richTextBoxEx1.AppendText("\n");    
+                    
+                    break;
+                case 4:    //朋友圈音乐链接
+                    startindex = content.IndexOf("【文字】");
+                    midindex = content.IndexOf("【音乐平台】");
+                    if (startindex >= 0 && midindex > startindex)
+                        word = content.Substring(startindex + 4, midindex - startindex - 4);
+                    if (word.Length > 0)
+                        richTextBoxEx1.AppendText(word + "\n");
+                    endindex = content.IndexOf("【链接URL】");
+                    if (endindex > midindex)
+                    {
+                        title = content.Substring(midindex + 6, endindex - midindex - 6);
+                        url = content.Substring(endindex + 7, content.Length - endindex - 7);
+                        startindex = url.IndexOf("http");
+                        url = url.Substring(startindex, url.Length - startindex);
+                    }
+                    richTextBoxEx1.InsertLink(title, url);
+                    richTextBoxEx1.AppendText("\n");
+                    break;
+
+                case 15:    //朋友圈视频链接
+                    startindex = content.IndexOf("【文字】");
+                    endindex = content.IndexOf("【视频URL】");
+                    if (startindex >= 0 && endindex > startindex)
+                    {
+                        title = content.Substring(startindex + 4, endindex - startindex - 4);
+                        url = content.Substring(endindex + 7, content.Length - endindex - 7);
+                    }
+
+                    richTextBoxEx1.InsertLink(title, url);
+                    richTextBoxEx1.AppendText("\n");
+                    
+                    break;
+                case 2:    //朋友圈视频链接
+                    startindex = content.IndexOf("【文字】");
+                    
+                    if (startindex >= 0)
+                    {
+                        title = content.Substring(startindex + 4, content.Length - startindex - 4);
+                        richTextBoxEx1.AppendText(title+"\n");
+                    }
+                    break;
+                case 1:    //朋友圈文字 or 图片
+                    startindex = content.IndexOf("【文字】");
+                    if (startindex == -1)    //没有文字，只有图片
+                    {
+                        endindex = content.IndexOf("【图片文件】");
+
+                        if (endindex >= 0)
+                        {
+                            for (int j = 0; j < 20; j++)
+                            {
+                                startindex = content.IndexOf("【图片文件】", endindex + 1, content.Length - endindex - 1);
+                                if (startindex > 0)
+                                {
+                                    url = content.Substring(endindex + 6, startindex - endindex - 6);
+                                    if (string.IsNullOrEmpty(url.Replace(" ", ""))) { }
+                                    else
+                                        print_file(url, url, richTextBoxEx1);
+                                    richTextBoxEx1.AppendText("\n");
+                                    endindex = startindex;
+                                }
+                                else
+                                {
+                                    url = content.Substring(endindex + 6, content.Length - endindex - 6);
+                                    if (string.IsNullOrEmpty(url.Replace(" ", ""))) { }
+                                    else
+                                        print_file(url, url, richTextBoxEx1);
+                                    richTextBoxEx1.AppendText("\n");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        endindex = content.IndexOf("【图片文件】");
+
+                        if (endindex >= 0)
+                        {
+                            title = content.Substring(startindex + 4, endindex - startindex - 4);
+                            richTextBoxEx1.AppendText(title + "\n");
+                            for (int j = 0; j < 20; j++)
+                            {
+                                startindex = content.IndexOf("【图片文件】", endindex + 1, content.Length - endindex - 1);
+                                if (startindex > 0)
+                                {
+                                    url = content.Substring(endindex + 6, startindex - endindex - 6);
+                                    if (string.IsNullOrEmpty(url.Replace(" ", ""))) { }
+                                    else
+                                        print_file(url, url, richTextBoxEx1);
+                                    richTextBoxEx1.AppendText("\n");
+                                    endindex = startindex;
+                                }
+                                else
+                                {
+                                    url = content.Substring(endindex + 6, content.Length - endindex - 6);
+                                    if (string.IsNullOrEmpty(url.Replace(" ", ""))) { }
+                                    else
+                                        print_file(url, url, richTextBoxEx1);
+                                    
+                                    richTextBoxEx1.AppendText("\n");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    break;
+                default:
+                    richTextBoxEx1.AppendText(content + "\n");
+                    break;
+            }
+
+
+        }
+        public static void print_MsgOrUrl(string content, int type, string path, WinAppDemo.tools.RichTextBoxEx richTextBoxEx1)
+        {
+            int startindex, endindex;
+            string title = "";
+            string url = "";
+            switch (type)
+            {
+                case 3:                    
+                    print_file("图片:" + content, path, richTextBoxEx1);                    
+                    break;
+                case 49:
+                    startindex = content.IndexOf("【标题】：");
+                    endindex = content.IndexOf("【url】：");
+                    if (startindex >= 0 && endindex > startindex)
+                    {
+                        title = content.Substring(startindex + 5, endindex - startindex - 5);
+                        url = content.Substring(endindex + 6, content.Length - endindex - 6);
+                        richTextBoxEx1.InsertLink(title, url);
+                        richTextBoxEx1.AppendText("\n");
+                    }
+
+                    else
+                    {
+                        title = content.Substring(startindex + 5, content.Length - startindex - 5);
+                        if (path == "")
+                            richTextBoxEx1.AppendText( title + "\n");
+                        else
+                        {
+                            if (string.IsNullOrEmpty(path.Replace(" ", ""))) { }
+                            else
+                                print_file(title, path, richTextBoxEx1);
+                        }
+                    }
+                    break;
+                case 34:
+                    startindex = content.IndexOf("；");                    
+                    title = content.Substring(0, startindex);
+                    print_file(title, path, richTextBoxEx1);
+                    break;
+                case 43:
+                    print_file("视频:"+content, path, richTextBoxEx1);
+                    break;
+                case 48:  //发送定位如何处理？？？       样例：经度：113.807121；纬度:34.794086；位置:创意岛大厦(郑州市金水区)
+                    richTextBoxEx1.AppendText(content + "\n");
+                    break;
+                default:
+                    richTextBoxEx1.AppendText(content + "\n");
+                    break;
+            }
+        }
+
     }
+
+
 
     class Slot
     {

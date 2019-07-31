@@ -38,7 +38,7 @@ namespace WinAppDemo.Controls
 
             ////获取手机型号由于创建证据目录
             //Process PreProcess = new Process();
-            //PreProcess.StartInfo.Arguments = "D: 0";  
+            //PreProcess.StartInfo.Arguments = Application.StartupPath + " 0";
             //PreProcess.StartInfo.FileName = Application.StartupPath + "\\socketPbi.exe";
             //PreProcess.StartInfo.Verb = "runas";
             //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -57,14 +57,14 @@ namespace WinAppDemo.Controls
                 Program.m_mainform.g_zjName = sArray[1].Replace("-", "") + DateTime.Now.ToString("yyyyMMddHHmmss");
                 Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
 
-                // File.Delete(filename);
+             //   File.Delete(filename);
 
                 //创建案件目录结构
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath);
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
-                //Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath);
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
             } 
         }
     }
