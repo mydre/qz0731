@@ -119,15 +119,24 @@ namespace WinAppDemo.tools
 
         public static void ChangeToMp3(string amr_path)//本类执行的入口
         {
-            string di_pcm = "";
-            string di_mp3 = "";
+            //string di_pcm = "";
+            //string di_mp3 = "";
             string cmd_command1 = "";
             string cmd_command2 = "";
-            amr_path = path(amr_path);//变成相对路径，反斜杠变为斜杠
-            di_pcm = changeAmrToPcm(amr_path);
-            di_mp3 = changePcmToMp3(di_pcm);
-            cmd_command1 = string.Format("{0} {1} {2}", "silk_v3_decoder.exe", amr_path, di_pcm);//产生cmd可执行的命令
-            cmd_command2 = string.Format("{0} {1} {2}", "lame.exe -r -s 24000 --preset voice", di_pcm, di_mp3);
+            //amr_path = path(amr_path);//变成相对路径，反斜杠变为斜杠
+            //di_pcm = changeAmrToPcm(amr_path);
+            //di_mp3 = changePcmToMp3(di_pcm);
+            //cmd_command1 = string.Format("{0} {1} {2}", "silk_v3_decoder.exe", amr_path, di_pcm);//产生cmd可执行的命令
+            //cmd_command2 = string.Format("{0} {1} {2}", "lame.exe -r -s 24000 --preset voice", di_pcm, di_mp3);
+
+            int index = amr_path.LastIndexOf(".");
+            string prefix = amr_path.Substring(0, index);
+            string pcm_path = string.Format("{0}.{1}", prefix, "pcm");
+            string mp3_path = string.Format("{0}.{1}", prefix, "mp3");
+            //Console.WriteLine(amr_path+"\n"+pcm_path+"\n"+mp3_path);
+
+            cmd_command1 = string.Format("{0} {1} {2}", "silk_v3_decoder.exe", amr_path, pcm_path);//产生cmd可执行的命令
+            cmd_command2 = string.Format("{0} {1} {2}", "lame.exe -r -s 24000 --preset voice", pcm_path, mp3_path);
 
             Task t1 = new Task(() =>
             {
@@ -135,12 +144,7 @@ namespace WinAppDemo.tools
             });
             Task t2 = new Task(() =>
             {
-                int i = 0;
-                while (!File.Exists(di_pcm))
-                {
-                    if (i++ > 200) break; 
-                    Thread.Sleep(50);
-                }
+                Thread.Sleep(50);
                 change(cmd_command2);
             });
             t1.Start();

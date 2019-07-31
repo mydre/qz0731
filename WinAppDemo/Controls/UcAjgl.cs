@@ -107,7 +107,8 @@ namespace WinAppDemo.Controls
                 var row = this.dataGridView1.SelectedRows[0];
                 //Console.WriteLine("下标：" + row.Index);
                 int indx = row.Index;
-                Program.m_mainform.g_ajName = (string)dataGridView1.SelectedRows[0].Cells[2].Value;
+                Program.m_mainform.g_ajName = (string)dataGridView1.Rows[indx].Cells[2].Value;
+                //Console.WriteLine(Program.m_mainform.g_ajName);
                 int caseId = (int)ac.aList[indx];
                 ac.caseId_selected_row = caseId;
                 using (var context = new CaseContext())

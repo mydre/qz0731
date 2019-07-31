@@ -37,14 +37,14 @@ namespace WinAppDemo.Controls
         {
             progressBar1.Value = 30;
             //获取手机基本信息包括设备信息、手机短信、通讯录、通话记录
-            //System.Diagnostics.Process Process = new System.Diagnostics.Process();
-            //Process.StartInfo.Arguments = Program.m_mainform.g_workPath + "\\PhoneData";
-            //Console.WriteLine(Process.StartInfo.Arguments);
-            //Process.StartInfo.FileName = Application.StartupPath + "\\installGetInfo.exe";
-            //Process.StartInfo.Verb = "runas";
-            //Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //Process.Start();
-            //Process.WaitForExit();
+            System.Diagnostics.Process Process = new System.Diagnostics.Process();
+            Process.StartInfo.Arguments = Program.m_mainform.g_workPath + "\\PhoneData";
+            Console.WriteLine(Process.StartInfo.Arguments);
+            Process.StartInfo.FileName = Application.StartupPath + "\\installGetInfo.exe";
+            Process.StartInfo.Verb = "runas";
+            Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            Process.Start();
+            Process.WaitForExit();
         }
 
         private void Button1_Click_1(object sender, EventArgs e)
