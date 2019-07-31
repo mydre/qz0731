@@ -22,8 +22,10 @@ namespace WinAppDemo.Forms
             InitializeComponent();
         }
 
-        private void BtnOk_Click(object sender, EventArgs e)//当点击确定的时候，页面上的数据，要保存在caseInfo中，然后将caseInfo写回到数据库中
+        public void BtnOk_Click(object sender, EventArgs e)//当点击确定的时候，页面上的数据，要保存在caseInfo中，然后将caseInfo写回到数据库中
         {
+            Console.WriteLine("编辑案件：");
+            this.Case.Path = Program.m_mainform.g_workPath;
             this.Case.CaseName = textBox1.Text;
             this.Case.CaseSerialNum = textBox2.Text;
             this.Case.CaseType = comboBox1.Text;
@@ -45,13 +47,16 @@ namespace WinAppDemo.Forms
                 caseContext.SaveChanges();
             }
             Program.m_mainform.AddNewGjalAj();
+
             MessageBox.Show("编辑案件成功！");
+
             this.Close();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+            Console.WriteLine("点击取消按键");
             //MessageBox.Show("取消");
         }
 

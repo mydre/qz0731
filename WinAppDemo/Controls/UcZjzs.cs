@@ -81,10 +81,22 @@ namespace WinAppDemo.Controls
                 });
             }
 
+            long totalNum = Program.m_mainform.g_Num_WXAccount;        //数据总条数      
+            totalNum += Program.m_mainform.g_Num_WXChatroom;
+            totalNum += Program.m_mainform.g_Num_WXChatroomList;
+            totalNum += Program.m_mainform.g_Num_WXMessage;
+            totalNum += Program.m_mainform.g_Num_WXNewFriend;
+            totalNum += Program.m_mainform.g_Num_WXSns;
+            totalNum += Program.m_mainform.g_Num_WXAddressBook;
+
+            totalNum += Program.m_mainform.g_Num_phoneinfo;
+            totalNum += Program.m_mainform.g_Num_Sms;
+            totalNum += Program.m_mainform.g_Num_Calls;
+            totalNum += Program.m_mainform.g_Num_Contacts;
 
             var topNode = new TreeNode();
             topNode.Name = "0";
-            topNode.Text = Program.m_mainform.g_ajName + @"（已删除\未删除\总共）"; // @"案件（已删除\未删除\总共）";
+            topNode.Text = Program.m_mainform.g_ajName + @"（总共"+Convert.ToString(totalNum)+"）"; // @"案件（已删除\未删除\总共）";
             treeView1.Nodes.Add(topNode);
             Bind(topNode, Types, 0);
 
@@ -92,14 +104,14 @@ namespace WinAppDemo.Controls
 
             //添加根节点
             TreeNode nodeAJ = new TreeNode();
-            nodeAJ.Text = Program.m_mainform.g_ajName + @"（已删除\未删除\总共）";
+            nodeAJ.Text = Program.m_mainform.g_ajName + @"（总共" + Convert.ToString(totalNum) + "）";
             treeView2.Nodes.Add(nodeAJ);
 
             TreeNode nodeZJ = new TreeNode();
-            nodeZJ.Text = Program.m_mainform.g_zjName + @"（ \ \ ）";
+            nodeZJ.Text = Program.m_mainform.g_zjName + @"（总共" + Convert.ToString(totalNum) + "）";
             nodeAJ.Nodes.Add(nodeZJ);           //添加证据结点
 
-            TreeNode nodeBase = new TreeNode("基础信息");
+            TreeNode nodeBase = new TreeNode("基础信息"+ @"（" + Convert.ToString(Program.m_mainform.g_Num_phoneinfo+ Program.m_mainform.g_Num_Sms+ Program.m_mainform.g_Num_Calls+ Program.m_mainform.g_Num_Contacts) +  "）");
             nodeZJ.Nodes.Add(nodeBase);
 
             int BaseNum = Program.m_mainform.checkBaseList.Count;
@@ -112,7 +124,7 @@ namespace WinAppDemo.Controls
             int FileNum = Program.m_mainform.checkFileList.Count;
             if (FileNum > 0)
             {
-                TreeNode nodeFile = new TreeNode("文件信息");
+                TreeNode nodeFile = new TreeNode("文件信息(0)");
                 nodeZJ.Nodes.Add(nodeFile);
                 for (int i = 0; i < FileNum; i++)
                 {
@@ -140,12 +152,12 @@ namespace WinAppDemo.Controls
                     TreeNode node = new TreeNode(Program.m_mainform.checkAppList[i]);
                     nodeApp.Nodes.Add(node);
                     if (node.Text == "微信")
-                    {
-                        TreeNode node1 = new TreeNode(WDID_Nickname);
+                    {                        
+                        TreeNode node1 = new TreeNode(WDID_Nickname+ "（" + Convert.ToString(Program.m_mainform.g_Num_WXAccount + Program.m_mainform.g_Num_WXChatroom + Program.m_mainform.g_Num_WXChatroomList + Program.m_mainform.g_Num_WXMessage + Program.m_mainform.g_Num_WXAddressBook + Program.m_mainform.g_Num_WXSns) + "）");
                         node.Nodes.Add(node1);
-                        TreeNode node11 = new TreeNode("账号信息");
+                        TreeNode node11 = new TreeNode("账号信息" + "（" + Convert.ToString(Program.m_mainform.g_Num_WXAccount) + "）");
                         node1.Nodes.Add(node11);
-                        TreeNode node12 = new TreeNode("通讯录");
+                        TreeNode node12 = new TreeNode("通讯录" + "（" + Convert.ToString(Program.m_mainform.g_Num_WXAddressBook) + "）");
                         node1.Nodes.Add(node12);
                         TreeNode node121 = new TreeNode("好友");
                         node12.Nodes.Add(node121);
@@ -159,7 +171,7 @@ namespace WinAppDemo.Controls
                         node12.Nodes.Add(node125);
 
 
-                        TreeNode node13 = new TreeNode("聊天记录");
+                        TreeNode node13 = new TreeNode("聊天记录" + "（" + Convert.ToString(Program.m_mainform.g_Num_WXMessage) + "）");
                         node1.Nodes.Add(node13);
                         TreeNode node131 = new TreeNode("好友聊天");
                         node13.Nodes.Add(node131);
@@ -168,7 +180,7 @@ namespace WinAppDemo.Controls
                         TreeNode node133 = new TreeNode("公众号讯息");
                         node13.Nodes.Add(node133);
 
-                        TreeNode node14 = new TreeNode("朋友圈");
+                        TreeNode node14 = new TreeNode("朋友圈" + "（" + Convert.ToString(Program.m_mainform.g_Num_WXSns) + "）");
                         node1.Nodes.Add(node14);
                         //TreeNode node141 = new TreeNode("本人的朋友圈");
                         //node14.Nodes.Add(node141);
@@ -367,7 +379,9 @@ namespace WinAppDemo.Controls
         {
             string nodeName = e.Node.Text as string;
             //string id = e.Node.Name;
-
+            int pos=nodeName.IndexOf("（");
+            if(pos>0)
+                nodeName = nodeName.Substring(0, pos);
             switch (nodeName)
             {
                 case "手机基本信息":                    
@@ -1115,6 +1129,32 @@ namespace WinAppDemo.Controls
                     if (type == 1 && type == 10000 && type == 50 && type == 47 && type == 10002 && type == 64 && type == 50 && type == 570425393)
                         richTextBoxEx1.AppendText(content + "\n");
                     else if (type == 436207665)   //红包
+                    {
+                        int status = Convert.ToInt32(dt1.Rows[i]["status"]);
+                        if (status == 3)
+                            richTextBoxEx1.AppendText(content + " （已收）\n");
+                        else if (status == 2)
+                            richTextBoxEx1.AppendText(content + " （未收）\n");
+                    }
+                    else if (type == 419430449)   //转账
+                    {
+                        int startindex, endindex;
+                        string title = "";
+                        string des = "";
+                        startindex = content.IndexOf("<title>");
+                        endindex = content.IndexOf("<des>");
+                        if (startindex >= 0 && endindex > startindex)
+                        {
+                            title = content.Substring(startindex + 7, endindex - startindex - 7);
+                            richTextBoxEx1.AppendText(title + "\n");
+                            des = content.Substring(endindex + 5, content.Length - endindex - 5);
+                            richTextBoxEx1.AppendText(des + "\n");
+                        }
+                        else
+                            richTextBoxEx1.AppendText(content + "\n");
+
+                    }
+                    else if (type == 318767153)   //服务通知
                     {
                         int status = Convert.ToInt32(dt1.Rows[i]["status"]);
                         if (status == 3)

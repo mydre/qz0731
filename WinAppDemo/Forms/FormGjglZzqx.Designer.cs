@@ -38,7 +38,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(240, 370);
+            this.button3.Location = new System.Drawing.Point(176, 369);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 3;
@@ -49,10 +49,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(53, 52);
+            this.pictureBox1.Location = new System.Drawing.Point(98, 9);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(440, 290);
+            this.pictureBox1.Size = new System.Drawing.Size(255, 343);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -60,7 +60,7 @@
             // btnRight
             // 
             this.btnRight.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRight.BackgroundImage")));
-            this.btnRight.Location = new System.Drawing.Point(500, 165);
+            this.btnRight.Location = new System.Drawing.Point(404, 165);
             this.btnRight.Margin = new System.Windows.Forms.Padding(0);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(37, 57);
@@ -82,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(549, 421);
+            this.ClientSize = new System.Drawing.Size(463, 421);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.btnRight);
             this.Controls.Add(this.button3);

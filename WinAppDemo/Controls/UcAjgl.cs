@@ -12,6 +12,11 @@ using WinAppDemo.Db.Base;
 using WinAppDemo.Db.Model;
 using System.Threading;
 using System.Collections;
+using System.Data.Entity;
+using System.Data.SQLite;
+using System.Data.Entity.SqlServer;
+
+
 namespace WinAppDemo.Controls
 {
     public partial class UcAjgl : UserControl
@@ -32,15 +37,17 @@ namespace WinAppDemo.Controls
             FormGjglNewAj form = new FormGjglNewAj();
             string s = form.ShowDialog().ToString();
             if (s == "Cancel") return;
+
             Case @case = form.Case;
             using (var context = new CaseContext())
             {
                 context.Cases.Add(@case);
                 context.SaveChanges();
                 AppContext.CaseID = @case.CaseId;
+                
             }
             Program.m_mainform.AddNewGjalAj();
-            MessageBox.Show("案件添加成功！");
+           // MessageBox.Show("案件添加成功！");
         }
 
         private void UcAjgl_Load(object sender, EventArgs e)
@@ -49,6 +56,7 @@ namespace WinAppDemo.Controls
             {
                 var cases = context.Cases.AsNoTracking().ToList();
                 this.dataGridView1.DataSource = cases;
+
                 //为了让案件的编号从1开始
                 var dgw = this.dataGridView1;
                 int len = dgw.Rows.Count;
@@ -62,7 +70,12 @@ namespace WinAppDemo.Controls
                     cell_caseId.Value = i + 1;
                     //Console.WriteLine(ac.aList[i]);
                 }
+
+                //Console.WriteLine("输出案件信息");
+                //Console.WriteLine(cases);
+
             }
+            
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)//为了完成复选框的选中和取消选中
@@ -88,7 +101,7 @@ namespace WinAppDemo.Controls
                 ac.loadDone = 1;
                 return;
             }
-            if(ac.loadDone == 1)
+            if (ac.loadDone == 1)
             {
                 //Console.WriteLine("加载完成了！");
                 var row = this.dataGridView1.SelectedRows[0];
@@ -119,6 +132,7 @@ namespace WinAppDemo.Controls
                 EquipTextLabel.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[9].Value);
                 CheckTimeTextLabel.Text = Convert.ToString(dataGridView1.Rows[row.Index].Cells[11].Value);
             }
+
         }
 
         private void button13_Click(object sender, EventArgs e)//对案件添加证据
@@ -375,9 +389,147 @@ namespace WinAppDemo.Controls
             form.ShowDialog();
         }
 
-        private void button6_Click(object sender, EventArgs e)//打开案件目录
+        private void SelectCaseButton_Click(object sender, EventArgs e)
         {
+            if(ByNameCheckBox.Checked)
+            {
+                if (CaseNametextBox.Text==null)
+                {
+                    MessageBox.Show("案件名称不能为空", "提示");
+                    return;
+                }
+                else
+                {
+                    if (ByTimeCheckBox.Checked)
+                    {
+                        if (StartdateTimePicker.Value > EnddateTimePicker.Value)
+                        {
+                            MessageBox.Show("按时间搜索案件的开始时间不能晚于结束时间", "提示");
+                            return;
+                        }
+                        else
+                        {
+                            //IList list = (IList)dataGridView1.DataSource;
+                            //while (list.Count != 0)
+                            //{
+                            //    list.RemoveAt(dataGridView1.CurrentRow.Index);
+                            //}
+                            //dataGridView1.DataSource = null;
+                            //dataGridView1.DataSource = list;
 
+                            using (var context = new CaseContext())
+                            {
+
+                                var cases = context.Cases
+                                     .Where(c => c.CaseName.Contains(CaseNametextBox.Text.ToString()) && string.Compare(c.CreateCaseTime, StartdateTimePicker.Value.ToString()) >= 0 && string.Compare(c.CreateCaseTime, EnddateTimePicker.Value.ToString()) <= 0).ToList();
+                                Console.WriteLine(cases);
+                                this.dataGridView1.DataSource = cases;
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        using (var context = new CaseContext())
+                        {
+
+                            var cases = context.Cases
+                                 .Where(c => c.CaseName.Contains(CaseNametextBox.Text.ToString())).ToList();
+                            Console.WriteLine(cases);
+                            this.dataGridView1.DataSource = cases;
+                        }
+                    }
+                    
+                }
+            }
+            else
+            {
+                if (ByTimeCheckBox.Checked)
+                {
+                    if (StartdateTimePicker.Value > EnddateTimePicker.Value)
+                    {
+                        MessageBox.Show("按时间搜索案件的开始时间不能晚于结束时间", "提示");
+                        return;
+                    }
+                    using (var context = new CaseContext())
+                    {
+
+                        var cases = context.Cases
+                             .Where(c=> string.Compare(c.CreateCaseTime, StartdateTimePicker.Value.ToString()) >= 0 && string.Compare(c.CreateCaseTime, EnddateTimePicker.Value.ToString()) <= 0).ToList();
+                        Console.WriteLine(cases);
+                        this.dataGridView1.DataSource = cases;
+                    }
+                }
+            }
+        }
+
+        private void ByNameCheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            if(ByNameCheckBox.Checked)
+            {
+                Console.WriteLine("按名称搜索功能打开");
+                CaseNametextBox.Enabled = true;
+                
+            }
+            else
+            {
+                Console.WriteLine("按名称搜索功能关闭");
+                CaseNametextBox.Enabled = false;
+            }
+               
+        }
+
+        private void ByTimeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ByTimeCheckBox.Checked)
+            {
+                Console.WriteLine("按时间搜索功能打开");
+                StartdateTimePicker.Enabled = true;
+                EnddateTimePicker.Enabled = true;
+
+            }
+            else
+            {
+                Console.WriteLine("按时间搜索功能关闭");
+                StartdateTimePicker.Enabled = false;
+                EnddateTimePicker.Enabled = false;
+            }
+        }
+
+        private void ProofByNameCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(ProofByNameCheckBox.Checked)
+            {
+                textBox3.Enabled = true;
+            }
+            else
+            {
+                textBox3.Enabled = false;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if(ProofByNameCheckBox.Checked)
+            {
+                if(textBox3.Text==null)
+                {
+                    MessageBox.Show("证据名称不能为空","提示");
+                    return;
+                }
+                else
+                {
+                    using (var context = new CaseContext())
+                    {
+
+                        int CaseId = int.Parse(dataGridView1.CurrentRow.Cells[1].Value.ToString());
+                        Console.WriteLine(CaseId);
+                        var proofs = context.Proofs
+                             .Where(p => p.ProofName.Contains(textBox3.Text.ToString())&&p.CaseID==CaseId).ToList();
+                        this.dataGridView2.DataSource = proofs;
+                    }
+                }
+            }
         }
     }
 }

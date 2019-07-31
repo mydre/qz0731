@@ -47,9 +47,15 @@ namespace WinAppDemo.Controls
 
             string exePath = System.Windows.Forms.Application.StartupPath;
 
-            imglist.Add(exePath + "/Images/test1.jpg");
-            imglist.Add(exePath + "/Images/test2.png");
-            imglist.Add(exePath + "/Images/test3.jpg");
+            //imglist.Add(exePath + "/Images/test1.jpg");
+            //imglist.Add(exePath + "/Images/test2.png");
+            //imglist.Add(exePath + "/Images/test3.jpg");
+            imglist.Add(exePath + "/Images/backup1.png");
+            imglist.Add(exePath + "/Images/backup2.png");
+            imglist.Add(exePath + "/Images/backup3.jpg");
+            imglist.Add(exePath + "/Images/backup4.jpg");
+            imglist.Add(exePath + "/Images/backup5.jpg");
+            imglist.Add(exePath + "/Images/backup6.jpg");
 
             FormGjglZzqx form = new FormGjglZzqx(imglist);
             form.ShowDialog();
