@@ -90,6 +90,10 @@ namespace WinAppDemo.Controls
             catch (Exception)
             {
             }
+            Program.m_mainform.g_ajName = (string)dataGridView1.SelectedRows[0].Cells[2].Value;
+            Console.WriteLine("记录案件名称");
+            Console.WriteLine(Program.m_mainform.g_ajName);
+
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)//当下一次点击和行和上一次点击的行不一致时，会触发该事件(如果多次点击同一行，则不触发)
@@ -108,6 +112,8 @@ namespace WinAppDemo.Controls
                 //Console.WriteLine("下标：" + row.Index);
                 int indx = row.Index;
                 Program.m_mainform.g_ajName = (string)dataGridView1.Rows[indx].Cells[2].Value;
+                //Program.m_mainform.g_ajName = (string)dataGridView1.SelectedRows[0].Cells[2].Value;
+                //Console.WriteLine("记录案件名称");
                 //Console.WriteLine(Program.m_mainform.g_ajName);
                 int caseId = (int)ac.aList[indx];
                 ac.caseId_selected_row = caseId;
@@ -138,6 +144,7 @@ namespace WinAppDemo.Controls
 
         private void button13_Click(object sender, EventArgs e)//对案件添加证据
         {
+
             AppConfig ac = AppConfig.getAppConfig();
             int indx = this.dataGridView1.SelectedRows[0].Index;
 

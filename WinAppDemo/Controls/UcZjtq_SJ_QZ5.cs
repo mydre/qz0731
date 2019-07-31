@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinAppDemo.Forms;
+using System.Diagnostics;
 
 namespace WinAppDemo.Controls
 {
@@ -36,13 +37,10 @@ namespace WinAppDemo.Controls
             m_imgList = imglist;
         }
 
-        private void UcZjtq_SJ_QZ4_Load(object sender, EventArgs e)
-        {
-            imgPos = 0;
-            imgCount = m_imgList.Count;
+        //private void UcZjtq_SJ_QZ4_Load(object sender, EventArgs e)
+        //{
 
-            init();
-        }
+        //}
 
         private void init()
         {
@@ -122,6 +120,44 @@ namespace WinAppDemo.Controls
         private void Button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void UcZjtq_SJ_QZ5_Load(object sender, EventArgs e)
+        {
+            imgPos = 0;
+            imgCount = m_imgList.Count;
+
+            init();
+            //卸载手机上已安装的APK
+            Console.WriteLine("开始卸载备份APK");
+            Process process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+            process.StandardInput.WriteLine("adb uninstall" + " " + "com.huawei.KoBackup");
+            process.StandardInput.WriteLine("exit");
+            process.StandardInput.AutoFlush = true;
+            process.WaitForExit();//等待程序执行完退出进程
+            process.Close();
+            //安装华为手机自带备份APK
+            Console.WriteLine("开始安装备份APK");
+            Process reprocess = new System.Diagnostics.Process();
+            reprocess.StartInfo.FileName = "cmd.exe";
+            reprocess.StartInfo.UseShellExecute = false;
+            reprocess.StartInfo.RedirectStandardError = true;
+            reprocess.StartInfo.RedirectStandardInput = true;
+            reprocess.StartInfo.RedirectStandardOutput = true;
+            reprocess.StartInfo.CreateNoWindow = true;
+            reprocess.Start();
+            reprocess.StandardInput.WriteLine("adb install" + " " + Application.StartupPath + "\\com.huawei.KoBackup.apk");
+            reprocess.StandardInput.WriteLine("exit");
+            reprocess.StandardInput.AutoFlush = true;
+            reprocess.WaitForExit();//等待程序执行完退出进程
+            reprocess.Close();
         }
     }
 }

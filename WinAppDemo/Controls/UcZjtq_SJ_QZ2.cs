@@ -47,6 +47,22 @@ namespace WinAppDemo.Controls
             Process.WaitForExit();
 
             MessageBox.Show("手机基本信息获取成功!", "提示");
+            Process.Close();
+            //提取手机的tencent文件夹
+            if (!File.Exists(Program.m_mainform.g_workPath + "//tencent"))
+            {
+                Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\tencent");
+            }
+            System.Diagnostics.Process reProcess = new System.Diagnostics.Process();
+            reProcess.StartInfo.Arguments = "sdcard/tencent"+" " + Program.m_mainform.g_workPath + "/tencent";
+            Console.WriteLine(reProcess.StartInfo.Arguments);
+            reProcess.StartInfo.FileName = Application.StartupPath + "\\pullFileFromPhone.exe";
+            reProcess.StartInfo.Verb = "runas";
+            reProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            reProcess.Start();
+            reProcess.WaitForExit();
+            reProcess.Close();
+            Console.WriteLine("提取tencent结束");
         }
 
         private void Button1_Click_1(object sender, EventArgs e)

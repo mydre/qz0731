@@ -25,6 +25,7 @@ namespace WinAppDemo.Forms
 
         private void FormGjglBf_Load(object sender, EventArgs e)
         {
+
             //卸载手机上已安装的APK
             Process process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "cmd.exe";
@@ -53,6 +54,19 @@ namespace WinAppDemo.Forms
             reprocess.StandardInput.AutoFlush = true;
             reprocess.WaitForExit();//等待程序执行完退出进程
             reprocess.Close();
+
+            Process PreProcess = new Process();
+            PreProcess = null;
+            PreProcess = new Process();
+            PreProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles " + " " + Program.m_mainform.g_workPath + "\\mm.db";
+            Console.WriteLine(PreProcess.StartInfo.Arguments);
+            PreProcess.StartInfo.FileName = Application.StartupPath + "\\getAllFilesName.exe";
+            PreProcess.StartInfo.Verb = "runas";
+            PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            PreProcess.Start();
+            PreProcess.WaitForExit();
+            Console.WriteLine("开始输出备份文件目录");
+
           
         }
         private void FormGjglBf_Shown(object sender, EventArgs e)
@@ -113,6 +127,7 @@ namespace WinAppDemo.Forms
             if (dr == DialogResult.OK)
             {
                 //adb提取备份文件
+
                 Process process = new System.Diagnostics.Process();
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.UseShellExecute = false;
@@ -143,7 +158,46 @@ namespace WinAppDemo.Forms
                     }
                 }
 
+
+                //Process process = new System.Diagnostics.Process();
+                //process.StartInfo.FileName = "cmd.exe";
+                //process.StartInfo.UseShellExecute = false;
+                //process.StartInfo.RedirectStandardError = true;
+                //process.StartInfo.RedirectStandardInput = true;
+                //process.StartInfo.RedirectStandardOutput = true;
+                //process.StartInfo.CreateNoWindow = true;
+                //process.Start();
+                //process.StandardInput.WriteLine("adb pull sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/Appbackup");
+                //process.StandardInput.WriteLine("exit");
+                //process.StandardInput.AutoFlush = true;
+                //string Conoutput = process.StandardOutput.ReadToEnd();
+                //process.WaitForExit();//等待程序执行完退出进程
+                //process.Close();
+                //Console.WriteLine(Conoutput);
+                System.Diagnostics.Process reProcess = new System.Diagnostics.Process();
+                reProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/Appbackup";
+                Console.WriteLine(reProcess.StartInfo.Arguments);
+                reProcess.StartInfo.FileName = Application.StartupPath + "\\pullFileFromPhone.exe";
+                reProcess.StartInfo.Verb = "runas";
+                reProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                reProcess.Start();
+                reProcess.WaitForExit();
+                reProcess.Close();
+                Console.WriteLine("提取备份文件结束");
+                
             }
+            if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencent.mm.db"))
+            {
+                Console.WriteLine("存在微信备份文件");
+                MessageBox.Show("提取备份文件完成");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("不存在微信备份文件", "提示");
+                return;
+            }
+
         }
        
     }

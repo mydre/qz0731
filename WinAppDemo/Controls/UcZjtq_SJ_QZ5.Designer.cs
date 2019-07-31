@@ -113,7 +113,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "UcZjtq_SJ_QZ5";
             this.Size = new System.Drawing.Size(1126, 780);
-            this.Load += new System.EventHandler(this.UcZjtq_SJ_QZ4_Load);
+            this.Load += new System.EventHandler(this.UcZjtq_SJ_QZ5_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

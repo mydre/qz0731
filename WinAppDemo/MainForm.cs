@@ -16,6 +16,7 @@ using System.Threading;
 using System.Collections;
 using System.Data.SQLite;
 using System.IO;
+using System.Diagnostics;
 //using PortableDeviceApiLib;
 //using PortableDeviceTypesLib;
 
@@ -102,14 +103,16 @@ namespace WinAppDemo
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.Text = "手机数据取证系统SC-A200-努比亚备份";
+            this.Text = "手机数据取证系统";
 
             TitleButtionInit();
             btnAjgl.BackgroundImage = Properties.Resources.ajgl1;
             DisplayContent(new UcAjgl());
 
             int i = 0;
-            i++;  
+            i++;
+
+
 
         }
         private void MainForm_Shown(object sender, EventArgs e)
