@@ -45,6 +45,8 @@ namespace WinAppDemo.Controls
             Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             Process.Start();
             Process.WaitForExit();
+
+            MessageBox.Show("手机基本信息获取成功!", "提示");
         }
 
         private void Button1_Click_1(object sender, EventArgs e)

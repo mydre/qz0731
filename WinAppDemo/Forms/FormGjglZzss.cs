@@ -48,7 +48,7 @@ namespace WinAppDemo.Forms
             Program.m_mainform.g_Num_WXAddressBook_app_ss = 0;
             Program.m_mainform.g_Num_WXAddressBook_other_ss = 0;
 
-            Program.m_mainform.g_Num_phoneinfo_ss = 0;
+            Program.m_mainform.g_Num_State_ss = 0;
             Program.m_mainform.g_Num_Sms_ss = 0;
             Program.m_mainform.g_Num_Calls_ss = 0;
             Program.m_mainform.g_Num_Contacts_ss = 0;
@@ -61,7 +61,8 @@ namespace WinAppDemo.Forms
             catch
             { }
 
-            string dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
+           // string dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
+            string dbPath = "Data Source =" + Program.m_mainform.g_workPath + "\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
             conn = new SQLiteConnection(dbPath);
             conn.Open();
 
@@ -395,11 +396,8 @@ namespace WinAppDemo.Forms
                 // {
                 if ("手机基本信息" == Program.m_mainform.checkTreeList[i])
                 {
-                    SQLCommand = string.Format(" SELECT count(*) FROM phoneinfo WHERE phoneNumber LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR model LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR type LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR Android LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR IMEI LIKE '%{0}%';", keyword);
+                    SQLCommand = string.Format(" SELECT count(*) FROM State WHERE name LIKE '%{0}%'", keyword);
+                    SQLCommand += string.Format(" OR value LIKE '%{0}%';", keyword);
 
                     cmdSelect = null;
                     cmdSelect = new SQLiteCommand(SQLCommand, conn);
@@ -407,7 +405,10 @@ namespace WinAppDemo.Forms
                     reader = cmdSelect.ExecuteReader();
                     reader.Read();
                     try
-                    { Program.m_mainform.g_Num_phoneinfo_ss = reader.GetInt32(0); }
+                    {
+                        if(reader.GetInt32(0)>0)
+                            Program.m_mainform.g_Num_State_ss = 1;
+                    }
                     catch
                     { }
                 }
@@ -417,7 +418,7 @@ namespace WinAppDemo.Forms
                     SQLCommand = string.Format(" SELECT count(*) FROM Sms WHERE phoneNumber LIKE '%{0}%'", keyword);
                     SQLCommand += string.Format(" OR content LIKE '%{0}%'", keyword);
                     SQLCommand += string.Format(" OR datetime LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR isSend LIKE '%{0}%';", keyword);
+                    SQLCommand += string.Format(" OR type LIKE '%{0}%';", keyword);
 
                     cmdSelect = null;
                     cmdSelect = new SQLiteCommand(SQLCommand, conn);
@@ -451,10 +452,10 @@ namespace WinAppDemo.Forms
                 {
                     SQLCommand = string.Format(" SELECT count(*) FROM Contacts WHERE phoneNumber LIKE '%{0}%'", keyword);
                     SQLCommand += string.Format(" OR name LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR company LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR Email LIKE '%{0}%'", keyword);
-                    SQLCommand += string.Format(" OR remark LIKE '%{0}%';", keyword);
+                    //SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+                    //SQLCommand += string.Format(" OR company LIKE '%{0}%'", keyword);
+                    //SQLCommand += string.Format(" OR Email LIKE '%{0}%'", keyword);
+                    //SQLCommand += string.Format(" OR remark LIKE '%{0}%';", keyword);
 
                     cmdSelect = null;
                     cmdSelect = new SQLiteCommand(SQLCommand, conn);

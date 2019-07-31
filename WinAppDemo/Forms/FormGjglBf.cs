@@ -128,19 +128,23 @@ namespace WinAppDemo.Forms
                 process.WaitForExit();//等待程序执行完退出进程
                 process.Close();
                 Console.WriteLine(Conoutput);
+
                 if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencnet.mm.db"))
                 {
-                    Console.WriteLine("存在微信备份文件");
+                    if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencent.mm.db"))
+                    {
+                        MessageBox.Show("获取备份完成!", "提示");
+                        Console.WriteLine("存在微信备份文件");
+                    }
+                    else
+                    {
+                        MessageBox.Show("不存在微信备份文件", "提示");
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("不存在微信备份文件", "提示");
-                    return;
-                }
-            }
-           
-        }
 
+            }
+        }
        
     }
 }
