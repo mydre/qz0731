@@ -31,6 +31,9 @@ namespace WinAppDemo.Forms
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("新建案件：" );
+            this.Case.Path = Program.m_mainform.g_workPath +@"\"+ textBox1.Text;
+            Program.m_mainform.g_workPath = this.Case.Path;
             this.Case.CaseName = textBox1.Text;
             this.Case.CaseSerialNum = textBox2.Text;
             this.Case.CaseType = comboBox1.Text;
@@ -40,7 +43,8 @@ namespace WinAppDemo.Forms
             this.Case.InspectionPersonName = textBox5.Text;
             this.Case.InspectionPersonDepartMent = textBox6.Text;
             this.Case.OrganizationCode = textBox7.Text;
-            this.Case.Note = textBox8.Text; 
+            this.Case.Note = textBox8.Text;
+            this.Case.CreateCaseTime = DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss");
             MessageBox.Show("案件添加成功！");         
             this.Close();
         }

@@ -42,6 +42,16 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.PortableDeviceApiLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>bin\Debug\Interop.PortableDeviceApiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.PortableDeviceTypesLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>bin\Debug\Interop.PortableDeviceTypesLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -216,6 +226,12 @@
     <Compile Include="Forms\FormGjglZzxxEdit.Designer.cs">
       <DependentUpon>FormGjglZzxxEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormShowBackupFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormShowBackupFiles.Designer.cs">
+      <DependentUpon>FormShowBackupFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +249,12 @@
     <Compile Include="tools\WechatLinkFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkDirectoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkDirectoryForm.Designer.cs">
+      <DependentUpon>WorkDirectoryForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Controls\UcAjgl.resx">
       <DependentUpon>UcAjgl.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,6 +266,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UcZjtq_SJ_Lj.resx">
       <DependentUpon>UcZjtq_SJ_Lj.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UcZjtq_SJ_QZ6.resx">
       <DependentUpon>UcZjtq_SJ_QZ6.cs</DependentUpon>
@@ -273,6 +296,9 @@
       <DependentUpon>UcZjzs.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGjglEditAj.resx">
+      <DependentUpon>FormGjglEditAj.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormGjglNewAj.resx">
       <DependentUpon>FormGjglNewAj.cs</DependentUpon>
     </EmbeddedResource>
@@ -294,6 +320,9 @@
     <EmbeddedResource Include="Forms\FormGjglZzqx.resx">
       <DependentUpon>FormGjglZzqx.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormShowBackupFiles.resx">
+      <DependentUpon>FormShowBackupFiles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -307,6 +336,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WorkDirectoryForm.resx">
+      <DependentUpon>WorkDirectoryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Db\CaseMsg.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -381,17 +415,36 @@
     <None Include="Resources\right2.png" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>5</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Images\backup1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\backup2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\backup3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\backup4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\backup5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\backup6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StartUSBDebug1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StartUSBDebug2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StartUSBDebug3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StartUSBDebug4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\test1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -399,6 +452,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\test3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\USBDebug.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\set.png" />
