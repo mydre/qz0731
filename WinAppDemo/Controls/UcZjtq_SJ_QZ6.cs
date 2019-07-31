@@ -92,31 +92,37 @@ namespace WinAppDemo.Controls
             //PreProcess.WaitForExit();
 
 
-            // MessageBox.Show("此处运行微信中转程序！", "提示", MessageBoxButtons.OKCancel);
+            // MessageBox.Show("此处运行微信解压程序！", "提示", MessageBoxButtons.OKCancel);
 
-            //Process PreProcess = new Process();
+            MessageBox.Show("数据提取中，请耐心等待！", "提示", MessageBoxButtons.OKCancel);
+            Process PreProcess = new Process();
+            PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath;
             //PreProcess.StartInfo.Arguments = "D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546";  //全路径
-            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\BackupConvert.exe";
-            //PreProcess.StartInfo.Verb = "runas";
-            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //PreProcess.Start();
+            PreProcess.StartInfo.FileName = Application.StartupPath + "\\BackupConvert.exe";
+            PreProcess.StartInfo.Verb = "runas";
+            PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            PreProcess.Start();
 
-            //PreProcess.WaitForExit();
+            PreProcess.WaitForExit();
 
-            //MessageBox.Show("接着运行微信中转程序！", "提示", MessageBoxButtons.OKCancel);
-            ////MessageBox.Show(Application.StartupPath, "提示", MessageBoxButtons.OKCancel);
+            
+            //MessageBox.Show(Application.StartupPath, "提示", MessageBoxButtons.OKCancel);
 
-            //PreProcess = null;
-            //PreProcess = new Process();
-            //PreProcess.StartInfo.Arguments = "D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546";  //全路径
-            //PreProcess.StartInfo.FileName = Application.StartupPath + "\\OnLineRes.exe";
-            //PreProcess.StartInfo.Verb = "runas";
-            //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //PreProcess.Start();
+            PreProcess = null;
+            PreProcess = new Process();
+            PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath;
+           // PreProcess.StartInfo.Arguments = "D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546";  //全路径
+            PreProcess.StartInfo.FileName = Application.StartupPath + "\\OnLineRes.exe";
+            PreProcess.StartInfo.Verb = "runas";
+            PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            PreProcess.Start();
 
-            //PreProcess.WaitForExit(); 
+            PreProcess.WaitForExit();
 
-            // Thread.Sleep(10000);
+            Thread.Sleep(10000);
+
+            MessageBox.Show("提取完成!", "提示");
+
             //timer.Stop();
         }
 

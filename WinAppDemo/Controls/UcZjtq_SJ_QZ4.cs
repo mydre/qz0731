@@ -132,16 +132,17 @@ namespace WinAppDemo.Controls
             Process PreProcess = new Process();
             PreProcess = null;
             PreProcess = new Process();
-            PreProcess.StartInfo.Arguments = "sdcard\\Huawei\\Backup\\backupFiles " + Program.m_mainform.g_workPath + "\\mm.db";
+            PreProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles " + " " + Program.m_mainform.g_workPath + "\\mm.db";
             Console.WriteLine(PreProcess.StartInfo.Arguments);
             PreProcess.StartInfo.FileName = Application.StartupPath + "\\getAllFilesName.exe";
             PreProcess.StartInfo.Verb = "runas";
             PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             PreProcess.Start();
             PreProcess.WaitForExit();
+            Console.WriteLine("开始输出备份文件目录");
             FormGjglBf form = new FormGjglBf();
             form.ShowDialog();
-            
+
         }
     }
 }

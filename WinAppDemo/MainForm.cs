@@ -58,7 +58,7 @@ namespace WinAppDemo
         public long g_Num_WXAddressBook_app = 0;
         public long g_Num_WXAddressBook_other = 0;
 
-        public long g_Num_phoneinfo = 0;
+        public long g_Num_State = 0;
         public long g_Num_Sms = 0;
         public long g_Num_Calls = 0;
         public long g_Num_Contacts = 0;
@@ -81,7 +81,7 @@ namespace WinAppDemo
         public long g_Num_WXAddressBook_app_ss = 0;
         public long g_Num_WXAddressBook_other_ss = 0;
 
-        public long g_Num_phoneinfo_ss = 0;
+        public long g_Num_State_ss = 0;
         public long g_Num_Sms_ss = 0;
         public long g_Num_Calls_ss = 0;
         public long g_Num_Contacts_ss = 0;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -34,8 +35,21 @@ namespace WinAppDemo.Controls
             Program.m_mainform.g_str_nickname = "";        //本人微信昵称
 
             //获取数据文件的路径
-            // string dbPath = "Data Source =" + Program.m_mainform.g_workPath + "\\AppData\\Weixin\\ca9529dc14475dbcc7e8553e77ad7d0b" + "\\midwxtrans.db";
-            string dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\AppData\\Weixin\\de28621220a0ab0fc066062fbf6bcf41\\midwxtrans.db";// + Program.m_mainform.g_workPath+"\\AppData\\Weixin\\ca9529dc14475dbcc7e8553e77ad7d0b" + "\\midwxtrans.db";
+            string Dir_WXmd5 = "";
+            DirectoryInfo root = new DirectoryInfo(Program.m_mainform.g_workPath + "\\AppData\\Weixin");
+            if (root.Exists)
+            {
+                foreach (DirectoryInfo d in root.GetDirectories())
+                {
+                    if (d.Name != "")
+                    {
+                        Dir_WXmd5 = d.Name;
+                        break;
+                    }
+                }
+            }
+             //string dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\AppData\\Weixin\\de28621220a0ab0fc066062fbf6bcf41\\midwxtrans.db";// + Program.m_mainform.g_workPath+"\\AppData\\Weixin\\ca9529dc14475dbcc7e8553e77ad7d0b" + "\\midwxtrans.db";
+             string dbPath = "Data Source =" + Program.m_mainform.g_workPath + "\\AppData\\Weixin\\"+ Dir_WXmd5+"\\midwxtrans.db";
 
             //创建数据库实例，指定文件位置
             Program.m_mainform.g_conn = new SQLiteConnection(dbPath);
@@ -46,17 +60,19 @@ namespace WinAppDemo.Controls
             panel3.Hide();
             dataGridView3.Hide();
 
-            dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
+            dbPath = "Data Source =" + Program.m_mainform.g_workPath + "\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
+          //  dbPath = "Data Source =D:\\手机取证工作路径设置\\案件20190707093739\\HONORV2020190701094546\\PhoneData\\PhoneData.db";   //打开短信、联系人、通话记录等数据库
             conn = new SQLiteConnection(dbPath);
             conn.Open();
 
-            SQLiteCommand cmdSelect = new SQLiteCommand("select count(*) FROM phoneinfo", conn);
+            SQLiteCommand cmdSelect = new SQLiteCommand("select count(*) FROM State", conn);
             cmdSelect.ExecuteNonQuery();
             SQLiteDataReader reader = cmdSelect.ExecuteReader();
             reader.Read();
             try
             {
-                Program.m_mainform.g_Num_phoneinfo = reader.GetInt32(0);
+                if(reader.GetInt32(0)>0)
+                    Program.m_mainform.g_Num_State = 1;
             }
             catch
             {
@@ -269,7 +285,7 @@ namespace WinAppDemo.Controls
             totalNum += Program.m_mainform.g_Num_WXAddressBook_app;
             totalNum += Program.m_mainform.g_Num_WXAddressBook_other;
 
-            totalNum += Program.m_mainform.g_Num_phoneinfo;
+            totalNum += Program.m_mainform.g_Num_State;
             totalNum += Program.m_mainform.g_Num_Sms;
             totalNum += Program.m_mainform.g_Num_Calls;
             totalNum += Program.m_mainform.g_Num_Contacts;
@@ -283,7 +299,7 @@ namespace WinAppDemo.Controls
             nodeZJ.Text = Program.m_mainform.g_zjName + @"（总共" + Convert.ToString(totalNum) + "）";
             nodeAJ.Nodes.Add(nodeZJ);           //添加证据结点
 
-            TreeNode nodeBase = new TreeNode("基础信息" + @"（" + Convert.ToString(Program.m_mainform.g_Num_phoneinfo + Program.m_mainform.g_Num_Sms + Program.m_mainform.g_Num_Calls + Program.m_mainform.g_Num_Contacts) + "）");
+            TreeNode nodeBase = new TreeNode("基础信息" + @"（" + Convert.ToString(Program.m_mainform.g_Num_State + Program.m_mainform.g_Num_Sms + Program.m_mainform.g_Num_Calls + Program.m_mainform.g_Num_Contacts) + "）");
             nodeZJ.Nodes.Add(nodeBase);
 
 
@@ -291,7 +307,7 @@ namespace WinAppDemo.Controls
             {
                 if ("手机基本信息" == Program.m_mainform.checkBaseList[i])
                 {
-                    TreeNode node = new TreeNode(Program.m_mainform.checkBaseList[i] + @"（" + Program.m_mainform.g_Num_phoneinfo + "）");
+                    TreeNode node = new TreeNode(Program.m_mainform.checkBaseList[i] + @"（" + Program.m_mainform.g_Num_State + "）");
                     nodeBase.Nodes.Add(node);
                 }
                 if ("短信" == Program.m_mainform.checkBaseList[i])
@@ -343,7 +359,7 @@ namespace WinAppDemo.Controls
                 if (dt2.Rows.Count == 1)
                 {
                     str_avatarPath = Convert.ToString(dt2.Rows[0]["avatarPath"]);
-                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + str_avatarPath)) //判断文件是否存在
+                    if (System.IO.File.Exists(Program.m_mainform.g_workPath+"\\AppExtract" + str_avatarPath)) //判断文件是否存在
                         is_avatarPath = true;
                     else
                         is_avatarPath = false;
@@ -432,7 +448,7 @@ namespace WinAppDemo.Controls
                         panel2.Hide();
                         panel3.Hide();
                         dataGridView3.DataSource = null;
-                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select phoneNumber as 手机号,model as 品牌,type as 型号,Android as 安卓版本,IMEI from phoneinfo;", conn);
+                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 名称,value as 值 from State;", conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView3.DataSource = dt1;
@@ -446,7 +462,9 @@ namespace WinAppDemo.Controls
                         panel2.Hide();
                         panel3.Hide();
                         dataGridView3.DataSource = null;
-                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 姓名,phoneNumber as 手机号, district as 地区,company as 单位,Email as 邮箱,remark as 备注 from Contacts;", conn);
+                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 姓名,phoneNumber as 手机号 from Contacts;", conn);
+                        //SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select name as 姓名,phoneNumber as 手机号, district as 地区,company as 单位,Email as 邮箱,remark as 备注 from Contacts;", conn);
+
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView3.DataSource = dt1;
@@ -461,7 +479,7 @@ namespace WinAppDemo.Controls
                         panel2.Hide();
                         panel3.Hide();
                         dataGridView3.DataSource = null;
-                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select phoneNumber as 手机号,content as 内容,datetime as 时间,isSend as 是否接收 from Sms;", conn);
+                        SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter("select phoneNumber as 手机号,content as 内容,datetime as 时间,type as 接收状态 from Sms;", conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
                         dataGridView3.DataSource = dt1;
@@ -887,11 +905,8 @@ namespace WinAppDemo.Controls
                         panel3.Hide();
                         dataGridView3.DataSource = null;
 
-                        SQLCommand = string.Format(" SELECT phoneNumber as 手机号,model as 品牌,type as 型号,Android as 安卓版本,IMEI FROM phoneinfo WHERE phoneNumber LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR model LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR type LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR Android LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR IMEI LIKE '%{0}%';", keyword);
+                        SQLCommand = string.Format(" SELECT name as 名称,value as 值 FROM State WHERE name LIKE '%{0}%'", keyword);
+                        SQLCommand += string.Format(" OR value LIKE '%{0}%';", keyword);
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter(SQLCommand, conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -906,12 +921,14 @@ namespace WinAppDemo.Controls
                         panel2.Hide();
                         panel3.Hide();
                         dataGridView3.DataSource = null;
-                        SQLCommand = string.Format(" select name as 姓名,phoneNumber as 手机号, district as 地区,company as 单位,Email as 邮箱,remark as 备注 from Contacts WHERE phoneNumber LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR name LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR company LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR Email LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR remark LIKE '%{0}%';", keyword);
+                        SQLCommand = string.Format(" select name as 姓名,phoneNumber as 手机号 from Contacts WHERE phoneNumber LIKE '%{0}%'", keyword);
+                        SQLCommand += string.Format(" OR name LIKE '%{0}%';", keyword);
+                        //SQLCommand = string.Format(" select name as 姓名,phoneNumber as 手机号, district as 地区,company as 单位,Email as 邮箱,remark as 备注 from Contacts WHERE phoneNumber LIKE '%{0}%'", keyword);
+                        //SQLCommand += string.Format(" OR name LIKE '%{0}%'", keyword);
+                        //SQLCommand += string.Format(" OR district LIKE '%{0}%'", keyword);
+                        //SQLCommand += string.Format(" OR company LIKE '%{0}%'", keyword);
+                        //SQLCommand += string.Format(" OR Email LIKE '%{0}%'", keyword);
+                        //SQLCommand += string.Format(" OR remark LIKE '%{0}%';", keyword);
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter(SQLCommand, conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -927,10 +944,10 @@ namespace WinAppDemo.Controls
                         panel2.Hide();
                         panel3.Hide();
                         dataGridView3.DataSource = null;
-                        SQLCommand = string.Format(" SELECT phoneNumber as 手机号,content as 内容,datetime as 时间,isSend as 是否接收 FROM Sms WHERE phoneNumber LIKE '%{0}%'", keyword);
+                        SQLCommand = string.Format(" SELECT phoneNumber as 手机号,content as 内容,datetime as 时间,type as 接收状态 FROM Sms WHERE phoneNumber LIKE '%{0}%'", keyword);
                         SQLCommand += string.Format(" OR content LIKE '%{0}%'", keyword);
                         SQLCommand += string.Format(" OR datetime LIKE '%{0}%'", keyword);
-                        SQLCommand += string.Format(" OR isSend LIKE '%{0}%';", keyword);
+                        SQLCommand += string.Format(" OR type LIKE '%{0}%';", keyword);
                         SQLiteDataAdapter mAdapter1 = new SQLiteDataAdapter(SQLCommand, conn);
                         DataTable dt1 = new DataTable();
                         mAdapter1.Fill(dt1);
@@ -1290,7 +1307,8 @@ namespace WinAppDemo.Controls
                     }
             }
         }
-        private void DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
@@ -1313,9 +1331,9 @@ namespace WinAppDemo.Controls
                 {
                     richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
                     richTextBoxEx1.SelectionColor = Color.DimGray;
-                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]))) //判断文件是否存在
+                    if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]))) //判断文件是否存在
                     {
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]));
+                        System.Drawing.Image img = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]));
                         Bitmap bmp = new Bitmap(img, 25, 22);
                         Clipboard.SetDataObject(bmp);
                         DataFormats.Format dataFormat =
@@ -1355,9 +1373,9 @@ namespace WinAppDemo.Controls
                     //                {
                     //                    url = content.Substring(endindex + 6, startindex - endindex - 6);
                     //                    //加载图片直接显示
-                    //                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url)) //判断文件是否存在
+                    //                    if (System.IO.File.Exists(Program.m_mainform.g_workPath+"\\AppExtract" + url)) //判断文件是否存在
                     //                    {
-                    //                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url);
+                    //                        System.Drawing.Image img = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath+"\\AppExtract" + url);
                     //                        Bitmap bmp = new Bitmap(img, 50, 35);
                     //                        Clipboard.SetDataObject(bmp);
                     //                        DataFormats.Format dataFormat =
@@ -1446,7 +1464,7 @@ namespace WinAppDemo.Controls
 
                         if (is_avatarPath) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + str_avatarPath);
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + str_avatarPath);
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1470,9 +1488,9 @@ namespace WinAppDemo.Controls
                             richTextBoxEx1.AppendText(")");
                             richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                            if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                            if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                             {
-                                System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                                System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                                 Bitmap bmp1 = new Bitmap(img1, 25, 22);
                                 Clipboard.SetDataObject(bmp1);
                                 DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1585,7 +1603,7 @@ namespace WinAppDemo.Controls
 
                         if (is_avatarPath) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + str_avatarPath);
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + str_avatarPath);
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1626,9 +1644,9 @@ namespace WinAppDemo.Controls
                                 richTextBoxEx1.AppendText(")");
                                 richTextBoxEx1.AppendText(WXID + "\n");
 
-                                if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt0.Rows[0]["avatarPath"]))) //判断文件是否存在
+                                if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt0.Rows[0]["avatarPath"]))) //判断文件是否存在
                                 {
-                                    System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt0.Rows[0]["avatarPath"]));
+                                    System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt0.Rows[0]["avatarPath"]));
                                     Bitmap bmp1 = new Bitmap(img1, 25, 22);
                                     Clipboard.SetDataObject(bmp1);
                                     DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1720,9 +1738,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1743,9 +1761,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -1860,7 +1878,7 @@ namespace WinAppDemo.Controls
                     totalNum_ss += Program.m_mainform.g_Num_WXAddressBook_gh_ss;
                     totalNum_ss += Program.m_mainform.g_Num_WXAddressBook_app_ss;
                     totalNum_ss += Program.m_mainform.g_Num_WXAddressBook_other_ss;
-                    totalNum_ss += Program.m_mainform.g_Num_phoneinfo_ss;
+                    totalNum_ss += Program.m_mainform.g_Num_State_ss;
                     totalNum_ss += Program.m_mainform.g_Num_Sms_ss;
                     totalNum_ss += Program.m_mainform.g_Num_Calls_ss;
                     totalNum_ss += Program.m_mainform.g_Num_Contacts_ss;
@@ -1873,7 +1891,7 @@ namespace WinAppDemo.Controls
                     TreeNode nodeZJ = new TreeNode();
                     nodeZJ.Text = Program.m_mainform.g_zjName + @"（搜索词:" + Program.m_mainform.g_keyword + "/数量:" + Convert.ToString(totalNum_ss) + "）";
                     nodeAJ.Nodes.Add(nodeZJ);           //添加证据结点
-                    TreeNode nodeBase = new TreeNode("基础信息" + @"（" + Convert.ToString(Program.m_mainform.g_Num_phoneinfo_ss + Program.m_mainform.g_Num_Sms_ss + Program.m_mainform.g_Num_Calls_ss + Program.m_mainform.g_Num_Contacts_ss) + "）");
+                    TreeNode nodeBase = new TreeNode("基础信息" + @"（" + Convert.ToString(Program.m_mainform.g_Num_State_ss + Program.m_mainform.g_Num_Sms_ss + Program.m_mainform.g_Num_Calls_ss + Program.m_mainform.g_Num_Contacts_ss) + "）");
                     nodeZJ.Nodes.Add(nodeBase);
 
                     int BaseNum = Program.m_mainform.checkBaseList.Count;
@@ -1881,7 +1899,7 @@ namespace WinAppDemo.Controls
                     {
                         if ("手机基本信息" == Program.m_mainform.checkBaseList[i])
                         {
-                            TreeNode node = new TreeNode(Program.m_mainform.checkBaseList[i] + @"（" + Program.m_mainform.g_Num_phoneinfo_ss + "）");
+                            TreeNode node = new TreeNode(Program.m_mainform.checkBaseList[i] + @"（" + Program.m_mainform.g_Num_State_ss + "）");
                             nodeBase.Nodes.Add(node);
                         }
                         if ("短信" == Program.m_mainform.checkBaseList[i])
@@ -1968,7 +1986,7 @@ namespace WinAppDemo.Controls
             }
         }
 
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
@@ -2007,7 +2025,7 @@ namespace WinAppDemo.Controls
                 dataGridView1.Show();
             }
         }
-        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //try
             //{
@@ -2051,9 +2069,9 @@ namespace WinAppDemo.Controls
                 {
                     richTextBoxEx1.SelectionAlignment = HorizontalAlignment.Left;
                     richTextBoxEx1.SelectionColor = Color.DimGray;
-                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]))) //判断文件是否存在
+                    if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]))) //判断文件是否存在
                     {
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]));
+                        System.Drawing.Image img = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[0]["avatarPath"]));
                         Bitmap bmp = new Bitmap(img, 25, 22);
                         Clipboard.SetDataObject(bmp);
                         DataFormats.Format dataFormat =
@@ -2093,9 +2111,9 @@ namespace WinAppDemo.Controls
                     //                {
                     //                    url = content.Substring(endindex + 6, startindex - endindex - 6);
                     //                    //加载图片直接显示
-                    //                    if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url)) //判断文件是否存在
+                    //                    if (System.IO.File.Exists(Program.m_mainform.g_workPath+"\\AppExtract" + url)) //判断文件是否存在
                     //                    {
-                    //                        System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + url);
+                    //                        System.Drawing.Image img = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath+"\\AppExtract" + url);
                     //                        Bitmap bmp = new Bitmap(img, 50, 35);
                     //                        Clipboard.SetDataObject(bmp);
                     //                        DataFormats.Format dataFormat =
@@ -2185,9 +2203,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["nickname"]));
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2209,9 +2227,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2306,9 +2324,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2330,9 +2348,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2427,9 +2445,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2450,9 +2468,9 @@ namespace WinAppDemo.Controls
                         richTextBoxEx1.AppendText(")");
                         richTextBoxEx1.AppendText(Convert.ToString(dt1.Rows[i]["WXID"]) + "\n");
 
-                        if (System.IO.File.Exists(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
+                        if (System.IO.File.Exists(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]))) //判断文件是否存在
                         {
-                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(@"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
+                            System.Drawing.Image img1 = System.Drawing.Image.FromFile(Program.m_mainform.g_workPath + "\\AppExtract" + Convert.ToString(dt1.Rows[i]["avatarPath"]));
                             Bitmap bmp1 = new Bitmap(img1, 25, 22);
                             Clipboard.SetDataObject(bmp1);
                             DataFormats.Format dataFormat1 = DataFormats.GetFormat(DataFormats.Bitmap);
@@ -2540,6 +2558,8 @@ namespace WinAppDemo.Controls
 
             }
         }
+
+       
     }
 
     //public class TreeNodeTypes

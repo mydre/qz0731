@@ -39,7 +39,7 @@
             this.WorDIrectoryTexbox.Name = "WorDIrectoryTexbox";
             this.WorDIrectoryTexbox.Size = new System.Drawing.Size(314, 21);
             this.WorDIrectoryTexbox.TabIndex = 5;
-            this.WorDIrectoryTexbox.Text = "D:\\\\手机取证工作路径设置";
+            this.WorDIrectoryTexbox.Text = "D:\\手机取证工作路径设置";
             // 
             // WorkDirectoryLabel
             // 

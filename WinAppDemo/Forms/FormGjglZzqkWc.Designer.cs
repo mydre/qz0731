@@ -67,12 +67,12 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(304, 50);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 8;
-            this.label3.Text = "未获取";
+            this.label3.Text = "获取成功";
             // 
             // label4
             // 
@@ -169,12 +169,12 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.Red;
+            this.label14.ForeColor = System.Drawing.Color.Black;
             this.label14.Location = new System.Drawing.Point(304, 134);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(41, 12);
+            this.label14.Size = new System.Drawing.Size(53, 12);
             this.label14.TabIndex = 18;
-            this.label14.Text = "未获取";
+            this.label14.Text = "获取成功";
             // 
             // label15
             // 
