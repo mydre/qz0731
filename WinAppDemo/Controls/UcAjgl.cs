@@ -374,5 +374,10 @@ namespace WinAppDemo.Controls
             FormGjglZzxxEdit form = new FormGjglZzxxEdit();
             form.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)//打开案件目录
+        {
+
+        }
     }
 }

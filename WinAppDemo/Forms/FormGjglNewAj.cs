@@ -41,7 +41,7 @@ namespace WinAppDemo.Forms
             this.Case.InspectionPersonDepartMent = textBox6.Text;
             this.Case.OrganizationCode = textBox7.Text;
             this.Case.Note = textBox8.Text; 
-            MessageBox.Show("案件添加成功！");         
+            //MessageBox.Show("案件添加成功！");         
             this.Close();
         }
 
