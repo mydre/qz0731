@@ -318,7 +318,7 @@
             this.button6.TabIndex = 9;
             this.button6.Text = "打开案件目录";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+       //     this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 

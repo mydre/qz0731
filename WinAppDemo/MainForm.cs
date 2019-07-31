@@ -16,8 +16,8 @@ using System.Threading;
 using System.Collections;
 using System.Data.SQLite;
 using System.IO;
-using PortableDeviceApiLib;
-using PortableDeviceTypesLib;
+//using PortableDeviceApiLib;
+//using PortableDeviceTypesLib;
 
 
 
@@ -25,8 +25,8 @@ namespace WinAppDemo
 {
     public partial class MainForm : Form
     {
-        private PortableDeviceManagerClass devMgr;
-        private PortableDeviceApiLib.PortableDeviceClass ppDevice;
+        //private PortableDeviceManagerClass devMgr;
+        //private PortableDeviceApiLib.PortableDeviceClass ppDevice;
 
         public SQLiteConnection g_conn = null;
         
@@ -39,24 +39,61 @@ namespace WinAppDemo
         public string Devicesystem = "";    //设备操作系统
         public string DeviceState = "";       //设备是否ROOT
 
-        public long g_Num_WXAccount = 0;
-        public long g_Num_WXChatroom = 0;
+        public string g_str_wxID = "";             //本人微信账号昵称
+        public string g_str_nickname = "";        //本人微信昵称
+
+        public long g_Num_WXAccount = 0;    //取证数据中各项条数
+        public long g_Num_WXChatroom = 0;        
         public long g_Num_WXChatroomList = 0;
         public long g_Num_WXMessage = 0;
+        public long g_Num_WXMessage_friend = 0;
+        public long g_Num_WXMessage_chatroom = 0;
+        public long g_Num_WXMessage_gh = 0;
         public long g_Num_WXNewFriend = 0;
         public long g_Num_WXSns = 0;
         public long g_Num_WXAddressBook = 0;
+        public long g_Num_WXAddressBook_friend = 0;
+        public long g_Num_WXAddressBook_gh = 0;
+        public long g_Num_WXAddressBook_chatroom = 0;
+        public long g_Num_WXAddressBook_app = 0;
+        public long g_Num_WXAddressBook_other = 0;
 
         public long g_Num_phoneinfo = 0;
         public long g_Num_Sms = 0;
         public long g_Num_Calls = 0;
         public long g_Num_Contacts = 0;
 
+        public string g_keyword = "";         //搜索的关键字
+        public bool g_newSearch = false;      //新的搜索
+        public long g_Num_WXAccount_ss = 0;  //关键字搜索各项条数
+        public long g_Num_WXChatroom_ss = 0;        
+        public long g_Num_WXChatroomList_ss = 0;
+        public long g_Num_WXMessage_ss = 0;
+        public long g_Num_WXMessage_friend_ss = 0;
+        public long g_Num_WXMessage_chatroom_ss = 0;
+        public long g_Num_WXMessage_gh_ss = 0;
+        public long g_Num_WXNewFriend_ss = 0;
+        public long g_Num_WXSns_ss = 0;
+        public long g_Num_WXAddressBook_ss = 0;
+        public long g_Num_WXAddressBook_friend_ss = 0;
+        public long g_Num_WXAddressBook_gh_ss = 0;
+        public long g_Num_WXAddressBook_chatroom_ss = 0;
+        public long g_Num_WXAddressBook_app_ss = 0;
+        public long g_Num_WXAddressBook_other_ss = 0;
+
+        public long g_Num_phoneinfo_ss = 0;
+        public long g_Num_Sms_ss = 0;
+        public long g_Num_Calls_ss = 0;
+        public long g_Num_Contacts_ss = 0;
 
         public List<string> checkBaseList = new List<string>();   //选中基础信息类列表
         public List<string> checkFileList = new List<string>();   //选中文件类列表
         public List<string> checkAppList = new List<string>();    //选中APP类列表
+
         public Case Case { get; set; } = new Case();                     //获取CaseInfo信息
+
+
+        public List<string> checkTreeList = new List<string>();    //搜索中选中的treeview节点列表
 
         public MainForm()
         {
@@ -72,9 +109,7 @@ namespace WinAppDemo
             DisplayContent(new UcAjgl());
 
             int i = 0;
-            i++;          
-
-         
+            i++;  
 
         }
         private void MainForm_Shown(object sender, EventArgs e)
@@ -140,7 +175,7 @@ namespace WinAppDemo
                     return;
                 }
               
-            }
+            }          
 
         }
         #endregion

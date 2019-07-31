@@ -42,6 +42,7 @@ namespace WinAppDemo.Controls
 
         public void startGetData()    //7.8
         {
+
             //获取 短信、联系人、通话记录
             //Process PreProcess = new Process();
             //PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath + " 1";

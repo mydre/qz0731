@@ -18,13 +18,15 @@ namespace WinAppDemo.Controls
         public UcZjtq_SJ_QZ1()
         {
             InitializeComponent();
+            Program.m_mainform.checkBaseList.Clear();
+            Program.m_mainform.checkFileList.Clear();
+            Program.m_mainform.checkAppList.Clear();
             Program.m_mainform.checkBaseList.Add("手机基本信息");
         }
         
         private void Button1_Click(object sender, EventArgs e)   //开始提取
-        {
-
-            foreach(Control c in this.groupBox1.Controls)
+        {            
+            foreach (Control c in this.groupBox1.Controls)
             {
                 if(c is CheckBox &&((CheckBox)c).Checked==true)
                 {

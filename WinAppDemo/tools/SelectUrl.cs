@@ -37,7 +37,7 @@ namespace WinAppDemo.tools
                     {
                         Console.WriteLine(ex.ToString());
                     }
-                    
+
                 }
                 i--;
             }
@@ -70,10 +70,10 @@ namespace WinAppDemo.tools
                         cursor += (index - cursor);//让cursor到达url的第一个字符的下标
                     }
                     //richTextBoxEx1.InsertLink(content.Substring(index, len));//向RichTextBox中插入该url，并将其设置为链接
-                    string url = content.Substring(index,len);
+                    string url = content.Substring(index, len);
 
-                    richTextBoxEx1.InsertLink(content.Substring(text_index,text_len) + "点击访问",url);
-                    if(i > 0) richTextBoxEx1.AppendText("\n");
+                    richTextBoxEx1.InsertLink(content.Substring(text_index, text_len) + "点击访问", url);
+                    if (i > 0) richTextBoxEx1.AppendText("\n");
 
                     cursor += len;//让cursor指向下一个符合语义的字符串
                 }
@@ -101,17 +101,17 @@ namespace WinAppDemo.tools
             string file_name = path.Substring(index + 1);
 
             int dot_index = file_name.IndexOf('.');
-            if(dot_index != -1)
+            if (dot_index != -1)
             {
                 string postFix = file_name.Substring(dot_index + 1);
                 string preFix = file_name.Substring(0, dot_index);
-                file_name = string.Format("{0}:{1}",postFix,preFix);
+                file_name = string.Format("{0}:{1}", postFix, preFix);
             }
 
             richTextBoxEx1.InsertLink(file_name, real_path);//插入link，第一个参数是文件的名字，第二个参数是文件的路径(第二个参数代表的就是隐藏的text)
             richTextBoxEx1.AppendText("\n");
         }
-        public static void print_file(string title,string mPath, WinAppDemo.tools.RichTextBoxEx richTextBoxEx1)
+        public static void print_file(string title, string mPath, WinAppDemo.tools.RichTextBoxEx richTextBoxEx1)
         {
             string path = mPath;
             string real_path = "";
@@ -183,7 +183,7 @@ namespace WinAppDemo.tools
                     if (startindex >= 0 && midindex > startindex)
                         word = content.Substring(startindex + 4, midindex - startindex - 4);
                     if (word.Length > 0)
-                        richTextBoxEx1.AppendText(word+"\n"); 
+                        richTextBoxEx1.AppendText(word + "\n");
                     endindex = content.IndexOf("【链接URL】");
                     if (endindex > midindex)
                     {
@@ -192,8 +192,8 @@ namespace WinAppDemo.tools
                     }
 
                     richTextBoxEx1.InsertLink(title, url);
-                    richTextBoxEx1.AppendText("\n");    
-                    
+                    richTextBoxEx1.AppendText("\n");
+
                     break;
                 case 4:    //朋友圈音乐链接
                     startindex = content.IndexOf("【文字】");
@@ -225,15 +225,15 @@ namespace WinAppDemo.tools
 
                     richTextBoxEx1.InsertLink(title, url);
                     richTextBoxEx1.AppendText("\n");
-                    
+
                     break;
                 case 2:    //朋友圈视频链接
                     startindex = content.IndexOf("【文字】");
-                    
+
                     if (startindex >= 0)
                     {
                         title = content.Substring(startindex + 4, content.Length - startindex - 4);
-                        richTextBoxEx1.AppendText(title+"\n");
+                        richTextBoxEx1.AppendText(title + "\n");
                     }
                     break;
                 case 1:    //朋友圈文字 or 图片
@@ -294,14 +294,14 @@ namespace WinAppDemo.tools
                                     if (string.IsNullOrEmpty(url.Replace(" ", ""))) { }
                                     else
                                         print_file(url, url, richTextBoxEx1);
-                                    
+
                                     richTextBoxEx1.AppendText("\n");
                                     break;
                                 }
                             }
                         }
                     }
-                    
+
                     break;
                 default:
                     richTextBoxEx1.AppendText(content + "\n");
@@ -317,8 +317,8 @@ namespace WinAppDemo.tools
             string url = "";
             switch (type)
             {
-                case 3:                    
-                    print_file(content, path, richTextBoxEx1);                    
+                case 3:
+                    print_file("图片:" + content, path, richTextBoxEx1);
                     break;
                 case 49:
                     startindex = content.IndexOf("【标题】：");
@@ -330,21 +330,27 @@ namespace WinAppDemo.tools
                         richTextBoxEx1.InsertLink(title, url);
                         richTextBoxEx1.AppendText("\n");
                     }
+
                     else
                     {
                         title = content.Substring(startindex + 5, content.Length - startindex - 5);
-                        if(string.IsNullOrEmpty(path.Replace(" ", ""))) { }
+                        if (path == "")
+                            richTextBoxEx1.AppendText(title + "\n");
                         else
-                            print_file(title,path, richTextBoxEx1);
+                        {
+                            if (string.IsNullOrEmpty(path.Replace(" ", ""))) { }
+                            else
+                                print_file(title, path, richTextBoxEx1);
+                        }
                     }
                     break;
                 case 34:
-                    startindex = content.IndexOf("；");                    
+                    startindex = content.IndexOf("；");
                     title = content.Substring(0, startindex);
                     print_file(title, path, richTextBoxEx1);
                     break;
                 case 43:
-                    print_file(content, path, richTextBoxEx1);
+                    print_file("视频:" + content, path, richTextBoxEx1);
                     break;
                 case 48:  //发送定位如何处理？？？       样例：经度：113.807121；纬度:34.794086；位置:创意岛大厦(郑州市金水区)
                     richTextBoxEx1.AppendText(content + "\n");

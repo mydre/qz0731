@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-using PortableDeviceApiLib;
+//using PortableDeviceApiLib;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -20,10 +20,10 @@ namespace WinAppDemo.Controls
     public partial class UcZjtq_SJ_Ljcg : UserControl
     {
 
-        PortableDeviceManagerClass devMgr = new PortableDeviceApiLib.PortableDeviceManagerClass();
-        IPortableDeviceValues pValues = (IPortableDeviceValues)new PortableDeviceTypesLib.PortableDeviceValuesClass();
-        PortableDeviceClass pPortableDevice = new PortableDeviceClass();
-        PortableDeviceClass ppDevice = new PortableDeviceClass();
+        //PortableDeviceManagerClass devMgr = new PortableDeviceApiLib.PortableDeviceManagerClass();
+        //IPortableDeviceValues pValues = (IPortableDeviceValues)new PortableDeviceTypesLib.PortableDeviceValuesClass();
+        //PortableDeviceClass pPortableDevice = new PortableDeviceClass();
+        //PortableDeviceClass ppDevice = new PortableDeviceClass();
         string deviceID = string.Empty;
 
 

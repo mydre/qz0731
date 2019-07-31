@@ -153,13 +153,15 @@ namespace WinAppDemo.Controls
             AppContext.GetInstance().m_ucZjtq_sj.Controls.Clear();
             AppContext.GetInstance().m_ucZjtq_sj.Controls.Add(AppContext.GetInstance().m_ucZjtq_sj_ljcg);
             #endregion
-           
+
 
             #region
             ////获取手机型号用于创建证据目录
             //Process PreProcess = new Process();
             //PreProcess.StartInfo.Arguments = Application.StartupPath + " 0";
+
             //Console.WriteLine(PreProcess.StartInfo.Arguments);
+
             //PreProcess.StartInfo.FileName = Application.StartupPath + "\\socketPbi.exe";
             //PreProcess.StartInfo.Verb = "runas";
             //PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -180,18 +182,18 @@ namespace WinAppDemo.Controls
             //    Console.WriteLine(ljcg.label2.Text);
             //}
 
-            //string filename = Application.StartupPath + "\\phoneModel.txt";
-            ////判断目标文件是否存在
-            //bool flag = File.Exists(filename);
-            //if (flag)
-            //{
-            //    string Str = File.ReadAllText(filename, Encoding.Default);
-            //    string[] sArray = Str.Split('/');
+            string filename = Application.StartupPath + "\\phoneModel.txt";
+            //判断目标文件是否存在
+            bool flag = File.Exists(filename);
+            if (flag)
+            {
+                string Str = File.ReadAllText(filename, Encoding.Default);
+                string[] sArray = Str.Split('/');
 
-            //    Program.m_mainform.g_zjName = sArray[1].Replace("-", "") + DateTime.Now.ToString("yyyyMMddHHmmss");
-            //    Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
+                Program.m_mainform.g_zjName = sArray[1].Replace("-", "") + DateTime.Now.ToString("yyyyMMddHHmmss");
+                Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
 
-            //    File.Delete(filename);
+                //    File.Delete(filename);
                 Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
                 //创建案件目录结构
                 Directory.CreateDirectory(Program.m_mainform.g_workPath);
@@ -199,9 +201,13 @@ namespace WinAppDemo.Controls
                 Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");
                 Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppExtract");
                 Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\PhoneData");
-          //  }
+            }
+
 
             #endregion
+
+             //   File.Delete(filename);
+
 
                 //创建案件目录结构
                 Directory.CreateDirectory(Program.m_mainform.g_workPath);
