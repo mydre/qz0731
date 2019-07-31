@@ -31,9 +31,10 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.文件名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.大小 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.操作 = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,36 +59,45 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3});
+            this.序号,
+            this.文件名,
+            this.大小,
+            this.操作});
             this.dataGridView1.Location = new System.Drawing.Point(64, 66);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(426, 208);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // Column1
+            // 序号
             // 
-            this.Column1.HeaderText = "备份时间";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
+            this.序号.HeaderText = "序号";
+            this.序号.Name = "序号";
+            this.序号.Width = 60;
             // 
-            // Column2
+            // 文件名
             // 
-            this.Column2.HeaderText = "备份大小";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 120;
+            this.文件名.HeaderText = "文件名";
+            this.文件名.Name = "文件名";
+            this.文件名.Width = 200;
             // 
-            // Column3
+            // 大小
             // 
-            this.Column3.HeaderText = "操作";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
+            this.大小.HeaderText = "大小";
+            this.大小.Name = "大小";
+            this.大小.Width = 83;
+            // 
+            // 操作
+            // 
+            this.操作.HeaderText = "操作";
+            this.操作.Name = "操作";
+            this.操作.Width = 83;
             // 
             // FormGjglBf
             // 
@@ -104,6 +114,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设备存在现有备份";
             this.Load += new System.EventHandler(this.FormGjglBf_Load);
+            this.Shown += new System.EventHandler(this.FormGjglBf_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -114,8 +125,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewButtonColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 文件名;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 大小;
+        private System.Windows.Forms.DataGridViewButtonColumn 操作;
     }
 }

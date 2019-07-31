@@ -24,7 +24,18 @@ namespace WinAppDemo.Controls
 
             if (imglist == null)
             {
-                imglist = new List<string>();
+               
+                string exePath = System.Windows.Forms.Application.StartupPath;
+
+                //imglist.Add(exePath + "/Images/test1.jpg");
+                //imglist.Add(exePath + "/Images/test2.png");
+                //imglist.Add(exePath + "/Images/test3.jpg");
+                imglist.Add(exePath + "/Images/backup1.png");
+                imglist.Add(exePath + "/Images/backup2.png");
+                imglist.Add(exePath + "/Images/backup3.jpg");
+                imglist.Add(exePath + "/Images/backup4.jpg");
+                imglist.Add(exePath + "/Images/backup5.jpg");
+                imglist.Add(exePath + "/Images/backup6.jpg");
             }
 
             m_imgList = imglist;
@@ -53,7 +64,7 @@ namespace WinAppDemo.Controls
                     btnLeft.Enabled = true;
                 }
 
-                if (imgPos >= imgCount - 1)
+                if (imgPos >= imgCount - 2)
                 {
                     btnRight.BackgroundImage = Properties.Resources.right1;
                     btnRight.Enabled = false;
@@ -66,14 +77,18 @@ namespace WinAppDemo.Controls
                 if (imgPos < 1)
                 {
                     pictureBox1.Image = Image.FromFile(m_imgList[0]);
+                    pictureBox2.Image = Image.FromFile(m_imgList[1]);
                 }
                 else if (imgPos >= imgCount - 1)
                 {
                     pictureBox1.Image = Image.FromFile(m_imgList[imgCount - 1]);
+                    pictureBox2.Image = Image.FromFile(m_imgList[imgCount ]);
                 }
+
                 else
                 {
                     pictureBox1.Image = Image.FromFile(m_imgList[imgPos]);
+                    pictureBox2.Image = Image.FromFile(m_imgList[imgPos+1]);
                 }
             }
             else
@@ -114,6 +129,17 @@ namespace WinAppDemo.Controls
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            Process PreProcess = new Process();
+            PreProcess = null;
+            PreProcess = new Process();
+            PreProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles " + " "+ Program.m_mainform.g_workPath + "\\mm.db";
+            Console.WriteLine(PreProcess.StartInfo.Arguments);
+            PreProcess.StartInfo.FileName = Application.StartupPath + "\\getAllFilesName.exe";
+            PreProcess.StartInfo.Verb = "runas";
+            PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            PreProcess.Start();          
+            PreProcess.WaitForExit();
+            Console.WriteLine("开始输出备份文件目录");
             FormGjglBf form = new FormGjglBf();
             form.ShowDialog();
             

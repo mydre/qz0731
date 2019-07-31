@@ -30,9 +30,15 @@ namespace WinAppDemo.Forms
 
             string exePath = System.Windows.Forms.Application.StartupPath;
 
-            imglist.Add(exePath + "/Images/test1.jpg");
-            imglist.Add(exePath + "/Images/test2.png");
-            imglist.Add(exePath + "/Images/test3.jpg");
+            //imglist.Add(exePath + "/Images/test1.jpg");
+            //imglist.Add(exePath + "/Images/test2.png");
+            //imglist.Add(exePath + "/Images/test3.jpg");
+            imglist.Add(exePath + "/Images/backup1.png");
+            imglist.Add(exePath + "/Images/backup2.png");
+            imglist.Add(exePath + "/Images/backup3.jpg");
+            imglist.Add(exePath + "/Images/backup4.jpg");
+            imglist.Add(exePath + "/Images/backup5.jpg");
+            imglist.Add(exePath + "/Images/backup6.jpg");
 
             UcZjtq_SJ_QZ4 m_ucZjtq_sj_qz4 = new UcZjtq_SJ_QZ4(imglist);
 

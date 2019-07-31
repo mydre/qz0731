@@ -34,6 +34,12 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Endlabel = new System.Windows.Forms.Label();
+            this.Startlabel = new System.Windows.Forms.Label();
+            this.EnddateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.ByTimeCheckBox = new System.Windows.Forms.CheckBox();
+            this.ByNameCheckBox = new System.Windows.Forms.CheckBox();
+            this.StartdateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -42,17 +48,18 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SelectCaseButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.CaseNametextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.ProofByNameCheckBox = new System.Windows.Forms.CheckBox();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
@@ -139,7 +146,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
             this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.checkBox1.Location = new System.Drawing.Point(10, 83);
+            this.checkBox1.Location = new System.Drawing.Point(8, 106);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(46, 16);
             this.checkBox1.TabIndex = 2;
@@ -149,8 +156,8 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -169,14 +176,14 @@
             this.createCaseTimeDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.caseBindingSource;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(7, 103);
+            this.dataGridView1.Location = new System.Drawing.Point(7, 117);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(841, 857);
+            this.dataGridView1.Size = new System.Drawing.Size(841, 843);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.DataGridView1_SelectionChanged);
@@ -192,8 +199,14 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.Endlabel);
+            this.panel1.Controls.Add(this.Startlabel);
+            this.panel1.Controls.Add(this.EnddateTimePicker);
+            this.panel1.Controls.Add(this.ByTimeCheckBox);
+            this.panel1.Controls.Add(this.ByNameCheckBox);
+            this.panel1.Controls.Add(this.StartdateTimePicker);
             this.panel1.Controls.Add(this.button9);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -202,15 +215,73 @@
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.SelectCaseButton);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.CaseNametextBox);
             this.panel1.Location = new System.Drawing.Point(7, 21);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(841, 63);
+            this.panel1.Size = new System.Drawing.Size(841, 90);
             this.panel1.TabIndex = 0;
+            // 
+            // Endlabel
+            // 
+            this.Endlabel.AutoSize = true;
+            this.Endlabel.Location = new System.Drawing.Point(29, 73);
+            this.Endlabel.Name = "Endlabel";
+            this.Endlabel.Size = new System.Drawing.Size(65, 12);
+            this.Endlabel.TabIndex = 18;
+            this.Endlabel.Text = "结束时间：";
+            // 
+            // Startlabel
+            // 
+            this.Startlabel.AutoSize = true;
+            this.Startlabel.Location = new System.Drawing.Point(27, 48);
+            this.Startlabel.Name = "Startlabel";
+            this.Startlabel.Size = new System.Drawing.Size(65, 12);
+            this.Startlabel.TabIndex = 17;
+            this.Startlabel.Text = "开始时间：";
+            // 
+            // EnddateTimePicker
+            // 
+            this.EnddateTimePicker.CustomFormat = "yyyy - MM - dd HH: mm:ss";
+            this.EnddateTimePicker.Enabled = false;
+            this.EnddateTimePicker.Location = new System.Drawing.Point(96, 68);
+            this.EnddateTimePicker.Name = "EnddateTimePicker";
+            this.EnddateTimePicker.Size = new System.Drawing.Size(115, 21);
+            this.EnddateTimePicker.TabIndex = 16;
+            // 
+            // ByTimeCheckBox
+            // 
+            this.ByTimeCheckBox.AutoSize = true;
+            this.ByTimeCheckBox.Location = new System.Drawing.Point(5, 30);
+            this.ByTimeCheckBox.Name = "ByTimeCheckBox";
+            this.ByTimeCheckBox.Size = new System.Drawing.Size(84, 16);
+            this.ByTimeCheckBox.TabIndex = 15;
+            this.ByTimeCheckBox.Text = "按时间搜索";
+            this.ByTimeCheckBox.UseVisualStyleBackColor = true;
+            this.ByTimeCheckBox.CheckedChanged += new System.EventHandler(this.ByTimeCheckBox_CheckedChanged);
+            // 
+            // ByNameCheckBox
+            // 
+            this.ByNameCheckBox.AutoSize = true;
+            this.ByNameCheckBox.Location = new System.Drawing.Point(6, 10);
+            this.ByNameCheckBox.Name = "ByNameCheckBox";
+            this.ByNameCheckBox.Size = new System.Drawing.Size(84, 16);
+            this.ByNameCheckBox.TabIndex = 14;
+            this.ByNameCheckBox.Text = "按名称搜索";
+            this.ByNameCheckBox.UseVisualStyleBackColor = true;
+            this.ByNameCheckBox.CheckStateChanged += new System.EventHandler(this.ByNameCheckBox_CheckStateChanged);
+            // 
+            // StartdateTimePicker
+            // 
+            this.StartdateTimePicker.CustomFormat = "yyyy - MM - dd HH: mm:ss";
+            this.StartdateTimePicker.Enabled = false;
+            this.StartdateTimePicker.Location = new System.Drawing.Point(96, 43);
+            this.StartdateTimePicker.Name = "StartdateTimePicker";
+            this.StartdateTimePicker.Size = new System.Drawing.Size(115, 21);
+            this.StartdateTimePicker.TabIndex = 13;
             // 
             // button9
             // 
@@ -223,7 +294,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(745, 19);
+            this.button8.Location = new System.Drawing.Point(745, 29);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(70, 23);
             this.button8.TabIndex = 11;
@@ -232,7 +303,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(645, 19);
+            this.button7.Location = new System.Drawing.Point(645, 31);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(90, 23);
             this.button7.TabIndex = 10;
@@ -241,7 +312,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(545, 19);
+            this.button6.Location = new System.Drawing.Point(545, 31);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(90, 23);
             this.button6.TabIndex = 9;
@@ -250,7 +321,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(460, 19);
+            this.button5.Location = new System.Drawing.Point(460, 31);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 8;
@@ -259,7 +330,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(405, 19);
+            this.button4.Location = new System.Drawing.Point(405, 31);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(45, 23);
             this.button4.TabIndex = 7;
@@ -269,7 +340,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(350, 19);
+            this.button3.Location = new System.Drawing.Point(350, 31);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(45, 23);
             this.button3.TabIndex = 6;
@@ -279,7 +350,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(270, 19);
+            this.button2.Location = new System.Drawing.Point(270, 31);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(70, 23);
             this.button2.TabIndex = 5;
@@ -287,46 +358,54 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // button1
+            // SelectCaseButton
             // 
-            this.button1.Location = new System.Drawing.Point(183, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "搜索";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SelectCaseButton.Location = new System.Drawing.Point(219, 32);
+            this.SelectCaseButton.Name = "SelectCaseButton";
+            this.SelectCaseButton.Size = new System.Drawing.Size(45, 23);
+            this.SelectCaseButton.TabIndex = 4;
+            this.SelectCaseButton.Text = "搜索";
+            this.SelectCaseButton.UseVisualStyleBackColor = true;
+            this.SelectCaseButton.Click += new System.EventHandler(this.SelectCaseButton_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Enabled = false;
             this.label2.Location = new System.Drawing.Point(10, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "案件时间:";
+            this.label2.Visible = false;
             // 
             // textBox2
             // 
+            this.textBox2.Enabled = false;
             this.textBox2.Location = new System.Drawing.Point(72, 32);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 2;
+            this.textBox2.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Enabled = false;
             this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "案件名称:";
+            this.label1.Visible = false;
             // 
-            // textBox1
+            // CaseNametextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(72, 5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 0;
+            this.CaseNametextBox.Enabled = false;
+            this.CaseNametextBox.Location = new System.Drawing.Point(96, 7);
+            this.CaseNametextBox.Name = "CaseNametextBox";
+            this.CaseNametextBox.Size = new System.Drawing.Size(115, 21);
+            this.CaseNametextBox.TabIndex = 0;
             // 
             // splitContainer1
             // 
@@ -360,8 +439,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.dataGridView2);
             this.groupBox2.Controls.Add(this.panel2);
@@ -378,8 +457,8 @@
             // 
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.AutoGenerateColumns = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -432,8 +511,9 @@
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.ProofByNameCheckBox);
             this.panel2.Controls.Add(this.button11);
             this.panel2.Controls.Add(this.button10);
             this.panel2.Controls.Add(this.button12);
@@ -444,6 +524,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(453, 41);
             this.panel2.TabIndex = 1;
+            // 
+            // ProofByNameCheckBox
+            // 
+            this.ProofByNameCheckBox.AutoSize = true;
+            this.ProofByNameCheckBox.Location = new System.Drawing.Point(3, 13);
+            this.ProofByNameCheckBox.Name = "ProofByNameCheckBox";
+            this.ProofByNameCheckBox.Size = new System.Drawing.Size(96, 16);
+            this.ProofByNameCheckBox.TabIndex = 16;
+            this.ProofByNameCheckBox.Text = "按关键字搜索";
+            this.ProofByNameCheckBox.UseVisualStyleBackColor = true;
+            this.ProofByNameCheckBox.CheckedChanged += new System.EventHandler(this.ProofByNameCheckBox_CheckedChanged);
             // 
             // button11
             // 
@@ -457,12 +548,13 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(185, 9);
+            this.button10.Location = new System.Drawing.Point(202, 9);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(45, 23);
             this.button10.TabIndex = 7;
             this.button10.Text = "搜索";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button12
             // 
@@ -477,11 +569,13 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Enabled = false;
             this.label3.Location = new System.Drawing.Point(5, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 12);
             this.label3.TabIndex = 6;
             this.label3.Text = "证据关键字:";
+            this.label3.Visible = false;
             // 
             // button13
             // 
@@ -495,14 +589,15 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(78, 10);
+            this.textBox3.Enabled = false;
+            this.textBox3.Location = new System.Drawing.Point(100, 10);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 21);
             this.textBox3.TabIndex = 5;
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.CheckTimeTextLabel);
             this.groupBox3.Controls.Add(this.EquipTextLabel);
@@ -882,11 +977,10 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button SelectCaseButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox CaseNametextBox;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
@@ -956,5 +1050,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn callRecordsCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn momoDataCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn wxDataCountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DateTimePicker StartdateTimePicker;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox ByTimeCheckBox;
+        private System.Windows.Forms.CheckBox ByNameCheckBox;
+        private System.Windows.Forms.CheckBox ProofByNameCheckBox;
+        private System.Windows.Forms.DateTimePicker EnddateTimePicker;
+        private System.Windows.Forms.Label Endlabel;
+        private System.Windows.Forms.Label Startlabel;
     }
 }

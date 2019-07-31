@@ -29,13 +29,34 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcZjtq_SJ_QZ5));
+            this.button3 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnLeft = new System.Windows.Forms.Panel();
             this.btnRight = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(873, 28);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(95, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "已完成，继续";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(111, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(161, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "请根据提示在手机上进行操作";
             // 
             // btnLeft
             // 
@@ -57,41 +78,34 @@
             this.btnRight.TabIndex = 8;
             this.btnRight.Click += new System.EventHandler(this.BtnRight_Click);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(873, 28);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(95, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "已完成，继续";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
             // pictureBox1
             // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(111, 65);
+            this.pictureBox1.Location = new System.Drawing.Point(170, 65);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(861, 585);
+            this.pictureBox1.Size = new System.Drawing.Size(355, 583);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // pictureBox2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(111, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "请根据提示在手机上进行操作";
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(579, 65);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(355, 583);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 11;
+            this.pictureBox2.TabStop = false;
             // 
             // UcZjtq_SJ_QZ5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.btnRight);
@@ -101,6 +115,7 @@
             this.Size = new System.Drawing.Size(1126, 780);
             this.Load += new System.EventHandler(this.UcZjtq_SJ_QZ4_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,5 +128,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

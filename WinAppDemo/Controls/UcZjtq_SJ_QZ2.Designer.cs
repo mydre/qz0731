@@ -34,8 +34,12 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.richTextBoxEx1 = new WinAppDemo.tools.RichTextBoxEx();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -43,7 +47,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(444, 91);
+            this.label1.Location = new System.Drawing.Point(443, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 25);
             this.label1.TabIndex = 1;
@@ -77,12 +81,23 @@
             // 
             // panel1
             // 
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.Location = new System.Drawing.Point(189, 144);
+            this.panel1.Controls.Add(this.richTextBoxEx1);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Location = new System.Drawing.Point(191, 112);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(626, 251);
+            this.panel1.Size = new System.Drawing.Size(626, 322);
             this.panel1.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(230, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(229, 16);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "请保持设备解锁并按图示操作";
             // 
             // button1
             // 
@@ -104,21 +119,44 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
+            // panel2
+            // 
+            this.panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel2.BackgroundImage")));
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel2.Location = new System.Drawing.Point(194, 112);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 322);
+            this.panel2.TabIndex = 0;
+            // 
+            // richTextBoxEx1
+            // 
+            this.richTextBoxEx1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.richTextBoxEx1.Location = new System.Drawing.Point(233, 96);
+            this.richTextBoxEx1.Name = "richTextBoxEx1";
+            this.richTextBoxEx1.ShowSelectionMargin = true;
+            this.richTextBoxEx1.Size = new System.Drawing.Size(372, 153);
+            this.richTextBoxEx1.TabIndex = 3;
+            this.richTextBoxEx1.Text = "1，数据提取过程中请留意手机屏幕上出现的权限请求或者是安全警告，一律允许；\n2，请不要关闭Show SMS APP，否则会导致数据提取异常；\n3，请保持手机处于解" +
+    "锁状态";
+            // 
             // UcZjtq_SJ_QZ2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Name = "UcZjtq_SJ_QZ2";
             this.Size = new System.Drawing.Size(1126, 780);
             this.Load += new System.EventHandler(this.UcZjtq_SJ_QZ2_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +170,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label3;
+        private tools.RichTextBoxEx richTextBoxEx1;
     }
 }

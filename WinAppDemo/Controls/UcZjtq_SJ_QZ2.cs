@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinAppDemo.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace WinAppDemo.Controls
 {
@@ -34,6 +36,15 @@ namespace WinAppDemo.Controls
         private void UcZjtq_SJ_QZ2_Load(object sender, EventArgs e)
         {
             progressBar1.Value = 30;
+            //获取手机基本信息包括设备信息、手机短信、通讯录、通话记录
+            System.Diagnostics.Process Process = new System.Diagnostics.Process();
+            Process.StartInfo.Arguments = Program.m_mainform.g_workPath + "\\PhoneData";
+            Console.WriteLine(Process.StartInfo.Arguments);
+            Process.StartInfo.FileName = Application.StartupPath + "\\installGetInfo.exe";
+            Process.StartInfo.Verb = "runas";
+            Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            Process.Start();
+            Process.WaitForExit();
         }
 
         private void Button1_Click_1(object sender, EventArgs e)
@@ -42,9 +53,14 @@ namespace WinAppDemo.Controls
 
             string exePath = System.Windows.Forms.Application.StartupPath;
 
-            imglist.Add(exePath + "/Images/test1.jpg");
-            imglist.Add(exePath + "/Images/test2.png");
-            imglist.Add(exePath + "/Images/test3.jpg");
+            //imglist.Add(exePath + "/Images/test1.jpg");
+            //imglist.Add(exePath + "/Images/test2.png");
+            //imglist.Add(exePath + "/Images/test3.jpg");
+            imglist.Add(exePath + "/Images/StartUSBDebug1.jpg");
+            imglist.Add(exePath + "/Images/StartUSBDebug2.png");
+            imglist.Add(exePath + "/Images/StartUSBDebug3.png");
+            
+
 
             FormGjglZzqx form = new FormGjglZzqx(imglist);
             form.ShowDialog();
@@ -57,5 +73,7 @@ namespace WinAppDemo.Controls
             FormGjglZzqk form = new FormGjglZzqk();
             form.ShowDialog();
         }
+
+       
     }
 }
