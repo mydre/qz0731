@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinAppDemo.Db.Base;
 using WinAppDemo.Db.Model;
+using System.Data.SQLite;
+using System.IO;
 //using System.Xml;
 //using System.Reflection;
 
@@ -17,6 +19,8 @@ namespace WinAppDemo.Forms
 {
     public partial class FormGjglZzxx : Form
     {
+        public SQLiteConnection g_conn = null;
+
         public FormGjglZzxx()
         {
             InitializeComponent();
@@ -27,45 +31,6 @@ namespace WinAppDemo.Forms
         private void Button3_Click(object sender, EventArgs e)
         {
                    
-               ////方法1修改config的数据库路径
-               //XmlDocument doc = new XmlDocument();
-               ////获得配置文件的全路径 
-               //string strFileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName+".config";
-               //MessageBox.Show(strFileName);
-               //doc.Load(strFileName);
-               ////找出名称为“add”的所有元素 
-               //XmlNodeList nodes = doc.GetElementsByTagName("add");
-               //XmlAttribute att;
-               //for (int i = 0; i < nodes.Count; i++)
-               //{
-               //    //获得将当前元素的key属性 
-               //    att = nodes[i].Attributes["name"];
-               //    //根据元素的第一个属性来判断当前的元素是不是目标元素 
-               //    if (att != null && att.Value == "sqlite_connection_string")
-               //    {
-               //        //对目标元素中的第二个属性赋值 
-               //        att = nodes[i].Attributes["connectionString"];
-               //        string strConn = "Data Source=" + Program.m_mainform.g_workPath + "\\midwxtrans.db;Pooling=true;FailIfMissing=false";
-               //        att.Value = strConn;
-               //        break;
-               //    }
-               //}
-               ////保存上面的修改 
-               //doc.Save(strFileName);
-
-               //FieldInfo fieldInfo = typeof(ConfigurationManager).GetField("sqlite_connection_string", BindingFlags.NonPublic | BindingFlags.Static);
-               //if (fieldInfo != null) fieldInfo.SetValue(null, 0);
-
-               ////方法2修改config的数据库路径，均不能正常工作
-               ////读app.config中的connectionStrings 
-               //ModifyAppConfig mac = new ModifyAppConfig();
-               //string strConnStrings = mac.GetConnectionStringsConfig("sqlite_connection_string");
-               ////重写app.config中的connectionStrings 
-               //ModifyAppConfig mac1 = new ModifyAppConfig();//"D:\手机取证工作路径设置\案件20190707093739\HONORV2020190701094546\AppData\Weixin\ca9529dc14475dbcc7e8553e77ad7d0b"
-               //string strConn = "Data Source=" + Program.m_mainform.g_workPath + "\\midwxtrans.db;Pooling=true;FailIfMissing=false";
-               //mac1.UpdateConnectionStringsConfig("sqlite_connection_string", strConn, "System.Data.SQLite.EF6");
-               //strConnStrings = mac1.GetConnectionStringsConfig("sqlite_connection_string");
-
                Program.m_mainform.AddNewGjalZs();
 
             using (var context = new CaseContext())
@@ -87,6 +52,86 @@ namespace WinAppDemo.Forms
                 context.SaveChanges();
             }
 
+            //写CaseMsg.db的AppInfo表        
+            string ProofId = "";
+            string uin = "";
+            string wxid = "";
+
+             //获取数据文件的路径
+            string Dir_WXmd5 = "";
+            DirectoryInfo root = new DirectoryInfo(Program.m_mainform.g_workPath + "\\AppData\\Weixin");
+            if (root.Exists)
+            {
+                foreach (DirectoryInfo d in root.GetDirectories())
+                {
+                    if (d.Name != "")
+                    {
+                        Dir_WXmd5 = d.Name;
+                        break;
+                    }
+                }
+            }
+            string dbPath = "Data Source =" + Program.m_mainform.g_workPath + "\\AppData\\Weixin\\" + Dir_WXmd5 + "\\midwxtrans.db";
+
+            g_conn = new SQLiteConnection(dbPath);
+            g_conn.Open();
+
+            
+            SQLiteCommand cmdSelect = new SQLiteCommand("select wxID from WXAccount;", g_conn);
+            cmdSelect.ExecuteNonQuery();
+            SQLiteDataReader reader = cmdSelect.ExecuteReader();
+            reader.Read();
+            try
+            {                
+                wxid = "wxid:" + reader.GetString(0);
+            }
+            catch
+            {
+            }
+            g_conn.Close();
+
+
+            //提取各微信账户的UIN
+            string WXPath = Program.m_mainform.g_workPath + "\\AppExtract\\com.tencent.mm\\shared_prefs\\app_brand_global_sp.xml";
+            if (System.IO.File.Exists(WXPath))
+            {
+                string stemp = File.ReadAllText(WXPath);
+                int start = stemp.IndexOf("<string>");
+                int end = stemp.IndexOf("</string>");
+                if (start >= 0 && end > start)
+                    uin ="uin:"+ stemp.Substring(start + 8, end - start - 8);
+            }
+            else
+                MessageBox.Show("文件不存在");
+             
+
+
+            //创建数据库实例，指定文件位置
+            dbPath = "Data Source =" + Application.StartupPath + "\\Db\\CaseMsg.db";
+            g_conn = new SQLiteConnection(dbPath);
+            g_conn.Open();
+
+            string sql = "select ProofId from ProofInfor where ProofName='" + textBox1.Text + "';";
+            cmdSelect = null;
+            cmdSelect = new SQLiteCommand(sql, g_conn);
+            cmdSelect.ExecuteNonQuery();
+            reader = cmdSelect.ExecuteReader();
+            reader.Read();
+            try
+            { 
+                    ProofId = Convert.ToString(reader.GetInt32(0));
+                    cmdSelect = null;
+                    sql = "insert into AppInfo values('" + ProofId +"','"+ textBox1.Text + "','Weinxin','"+ uin + "','"+ wxid + "');";
+                    cmdSelect = new SQLiteCommand(sql, g_conn);
+                    cmdSelect.ExecuteNonQuery();
+                              
+            }
+            catch
+            {
+            }
+            g_conn.Close();
+
+
             this.Close();
             AppConfig.AppConfigAddAdvinceClear();
             AppContext.setInstanceNull();
@@ -101,40 +146,7 @@ namespace WinAppDemo.Forms
         }
     }
 
-    //class ModifyAppConfig
-    //{
-    //    /// 获取ConnectionStrings 
-       
-    //    public string GetConnectionStringsConfig(string connectionName)
-    //    {
-    //        string connectionString = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
-    //        return connectionString;
-    //    }
-        
-    //    /// 更新连接字符串 
-        
-    //    public void UpdateConnectionStringsConfig(string newName, string newConString, string newProviderName)
-    //    {
-    //        //bool isModified = false;    //记录该连接串是否已经存在           
+  
 
-    //        if (ConfigurationManager.ConnectionStrings[newName] != null)
-    //        {
-    //       //     isModified = true;
-
-    //            // 打开可执行的配置文件*.exe.config
-    //            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-    //            config.ConnectionStrings.ConnectionStrings.Remove(newName);
-    //            //新建一个连接字符串实例 
-    //            ConnectionStringSettings mySettings = new ConnectionStringSettings(newName, newConString, newProviderName);
-            
-    //            // 将新的连接串添加到配置文件中. 
-    //            config.ConnectionStrings.ConnectionStrings.Add(mySettings);
-    //            // 保存对配置文件所作的更改 
-    //            config.Save(ConfigurationSaveMode.Modified);
-    //            // 强制重新载入配置文件的ConnectionStrings配置节  
-    //            ConfigurationManager.RefreshSection("ConnectionStrings");
-    //        }
-    //    }
-    //}
 
 }

@@ -164,8 +164,11 @@
     </Compile>
     <Compile Include="Db\Base\CaseContext.cs" />
     <Compile Include="Db\Base\SqliteDbContext.cs" />
+    <Compile Include="Db\Model\Calls.cs" />
     <Compile Include="Db\Model\Case.cs" />
+    <Compile Include="Db\Model\Contacts.cs" />
     <Compile Include="Db\Model\Proof.cs" />
+    <Compile Include="Db\Model\Sms.cs" />
     <Compile Include="Db\Model\User.cs" />
     <Compile Include="Db\Model\WxAccount.cs" />
     <Compile Include="Db\Model\WxFriend.cs" />

@@ -111,7 +111,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormGjglBf";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "设备存在现有备份";
             this.Load += new System.EventHandler(this.FormGjglBf_Load);
             this.Shown += new System.EventHandler(this.FormGjglBf_Shown);

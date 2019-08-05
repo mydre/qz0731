@@ -26,8 +26,8 @@ namespace WinAppDemo.Forms
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            FormGjglZzxx from = new FormGjglZzxx();
-            from.ShowDialog();
+            FormGjglZzxx form = new FormGjglZzxx();
+            form.ShowDialog();
 
             this.Close();
         }

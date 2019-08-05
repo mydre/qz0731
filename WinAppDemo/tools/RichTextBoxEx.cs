@@ -159,7 +159,7 @@ namespace WinAppDemo.tools
         /// <param name="hyperlink">Invisible hyperlink string to be inserted</param>
         public void InsertLink(string text, string hyperlink)
         {
-            InsertLink(text, hyperlink, this.SelectionStart);
+            InsertLink(text, hyperlink, 1);
         }
 
         /// <summary>

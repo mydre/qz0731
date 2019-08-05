@@ -39,6 +39,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.richTextBoxEx1 = new WinAppDemo.tools.RichTextBoxEx();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +70,7 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(626, 23);
             this.progressBar1.TabIndex = 13;
+            this.progressBar1.Value = 10;
             // 
             // label2
             // 
@@ -139,11 +141,21 @@
             this.richTextBoxEx1.Text = "1，数据提取过程中请留意手机屏幕上出现的权限请求或者是安全警告，一律允许；\n2，请不要关闭Show SMS APP，否则会导致数据提取异常；\n3，请保持手机处于解" +
     "锁状态";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(580, 467);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(23, 12);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "10%";
+            // 
             // UcZjtq_SJ_QZ2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
@@ -173,5 +185,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label3;
         private tools.RichTextBoxEx richTextBoxEx1;
+        private System.Windows.Forms.Label label4;
     }
 }

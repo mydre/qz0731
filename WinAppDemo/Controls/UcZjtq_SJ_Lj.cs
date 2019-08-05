@@ -158,9 +158,9 @@ namespace WinAppDemo.Controls
             #region
 
                 Program.m_mainform.g_workPath += "\\" + Program.m_mainform.g_ajName + "\\" + Program.m_mainform.g_zjName;
-            //创建案件目录结构
-            Console.WriteLine("记录证据名称");
-            Console.WriteLine(Program.m_mainform.g_workPath);
+               //创建案件目录结构
+                Console.WriteLine("记录证据名称");
+                Console.WriteLine(Program.m_mainform.g_workPath);
                 Directory.CreateDirectory(Program.m_mainform.g_workPath);
                 Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppBackup");
                 Directory.CreateDirectory(Program.m_mainform.g_workPath + "\\AppData");

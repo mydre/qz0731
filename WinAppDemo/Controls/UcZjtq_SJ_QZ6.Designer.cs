@@ -452,6 +452,7 @@
             this.Controls.Add(this.button3);
             this.Name = "UcZjtq_SJ_QZ6";
             this.Size = new System.Drawing.Size(1147, 808);
+            this.Load += new System.EventHandler(this.UcZjtq_SJ_QZ6_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

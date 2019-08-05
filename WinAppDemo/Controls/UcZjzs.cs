@@ -14,6 +14,8 @@ using WinAppDemo.Db.Model;
 using System.Data.SQLite;
 using System.Threading;
 using WinAppDemo.tools;
+using System.Diagnostics;
+
 
 namespace WinAppDemo.Controls
 {
@@ -1449,7 +1451,7 @@ namespace WinAppDemo.Controls
                 for (int i = 0; i < count; i++)
                 {
                     int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
-                    string path = Convert.ToString(dt1.Rows[i]["path"]);
+                    string path = Program.m_mainform.g_workPath + "\\PhoneData" + Convert.ToString(dt1.Rows[i]["path"]);
                     string content = Convert.ToString(dt1.Rows[i]["content"]);
 
                     if (Convert.ToInt16(dt1.Rows[i]["isSend"]) == 1)
@@ -1579,7 +1581,7 @@ namespace WinAppDemo.Controls
                     //if (i == 7000) MessageBox.Show("7000");
 
                     int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
-                    string path = Convert.ToString(dt1.Rows[i]["path"]);
+                    string path = Program.m_mainform.g_workPath + "\\PhoneData" + Convert.ToString(dt1.Rows[i]["path"]);
                     string content = Convert.ToString(dt1.Rows[i]["content"]);
 
                     if (Convert.ToInt16(dt1.Rows[i]["isSend"]) == 1)  //本人发送,content里不含微信ID信息
@@ -2242,7 +2244,7 @@ namespace WinAppDemo.Controls
 
                     }
                     int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
-                    string path = Convert.ToString(dt1.Rows[i]["path"]);
+                    string path = Program.m_mainform.g_workPath + "\\PhoneData" + Convert.ToString(dt1.Rows[i]["path"]);
                     string content = Convert.ToString(dt1.Rows[i]["content"]);
 
                     if (type == 1 && type == 10000 && type == 50 && type == 47 && type == 10002 && type == 64 && type == 50 && type == 570425393)
@@ -2364,7 +2366,7 @@ namespace WinAppDemo.Controls
                     }
 
                     int type = Convert.ToInt32(dt1.Rows[i]["TYPE"]);
-                    string path = Convert.ToString(dt1.Rows[i]["path"]);
+                    string path = Program.m_mainform.g_workPath + "\\PhoneData" + Convert.ToString(dt1.Rows[i]["path"]);
                     string content = Convert.ToString(dt1.Rows[i]["content"]);
 
                     if (type == 1 || type == 10000 || type == 50 || type == 47 || type == 10002 || type == 64 || type == 50 || type == 570425393)
@@ -2559,17 +2561,45 @@ namespace WinAppDemo.Controls
             }
         }
 
-       
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //获取需要导出报告的案件ID号
+            // string  CaseID ;
+            Console.WriteLine("首先输出证据ID");
+            string dbPath = "Data Source =" + Application.StartupPath + "\\Db\\CaseMsg.db";
+            Program.m_mainform.g_conn = new SQLiteConnection(dbPath);
+            Program.m_mainform.g_conn.Open();
+            SQLiteCommand com = Program.m_mainform.g_conn.CreateCommand();
+            com.CommandText = "select ProofId from ProofInfor where ProofName='"+Program.m_mainform.g_zjName+"'";
+            SQLiteDataReader sr = com.ExecuteReader();
+            while (sr.Read())
+            {
+                Program.m_mainform.ReportProofId = sr[0].ToString();
+                Console.WriteLine("证据ID为：");
+                Console.WriteLine(sr[0]);
+            }
+            Program.m_mainform.g_conn.Close();
+
+            //导出报告
+           string Path= Program.m_mainform.g_workPath.Substring(0, Program.m_mainform.g_workPath.LastIndexOf(@"\"));
+            Console.WriteLine(Path);
+            Console.WriteLine(Program.m_mainform.g_workPath);
+
+            Process PreProcess = new Process();
+            PreProcess = null;
+            PreProcess = new Process();
+            PreProcess.StartInfo.Arguments = Program.m_mainform.g_workPath + " "+Program.m_mainform.ReportProofId;
+            Console.WriteLine(PreProcess.StartInfo.Arguments);
+            PreProcess.StartInfo.FileName = Application.StartupPath + "\\HTMLExport.exe";
+            PreProcess.StartInfo.Verb = "runas";
+            PreProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            PreProcess.Start();
+            string Conoutput = PreProcess.StandardOutput.ReadToEnd();
+            PreProcess.WaitForExit();
+            Console.WriteLine(Conoutput);
+            Console.WriteLine("开始输出取证报告");
+        }
     }
 
-    //public class TreeNodeTypes
-    //{
-    //    public int Id { get; set; }
 
-    //    public string Name { get; set; }
-
-    //    public string Value { get; set; }
-
-    //    public int ParentId { get; set; }
-    //}
 }

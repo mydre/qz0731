@@ -39,6 +39,9 @@ namespace WinAppDemo
         public string DeviceModel = "";     //设备型号
         public string Devicesystem = "";    //设备操作系统
         public string DeviceState = "";       //设备是否ROOT
+        public bool IsBackup;                   //是否新建备份
+        public string ReportCaseId = "";  //取报告的案件ID
+        public string ReportProofId = "";  //取报告的证据ID
 
         public string g_str_wxID = "";             //本人微信账号昵称
         public string g_str_nickname = "";        //本人微信昵称

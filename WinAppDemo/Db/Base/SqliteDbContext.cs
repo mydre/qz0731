@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,8 @@ namespace WinAppDemo.Db.Base
         public DbSet<WxFriend> WxFriends { get; set; }
         public DbSet<WxSns> WxSns { get; set; }
         public DbSet<WxNewFriend> WxNewFriend { get; set; }
+        public DbSet<Contacts> Contacts { get; set; }
+        public DbSet<Calls> Calls { get; set; }
+        public DbSet<Sms> Sms { get; set; }
     }
 }

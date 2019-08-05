@@ -25,36 +25,6 @@ namespace WinAppDemo.Forms
 
         private void FormGjglBf_Load(object sender, EventArgs e)
         {
-
-            //卸载手机上已安装的APK
-            Process process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-            process.StandardInput.WriteLine("adb uninstall" + " " + "\\com.huawei.KoBackup");
-            process.StandardInput.WriteLine("exit");
-            process.StandardInput.AutoFlush = true;
-            process.WaitForExit();//等待程序执行完退出进程
-            process.Close();
-            //安装华为手机自带备份APK
-            Process reprocess = new System.Diagnostics.Process();
-            reprocess.StartInfo.FileName = "cmd.exe";
-            reprocess.StartInfo.UseShellExecute = false;
-            reprocess.StartInfo.RedirectStandardError = true;
-            reprocess.StartInfo.RedirectStandardInput = true;
-            reprocess.StartInfo.RedirectStandardOutput = true;
-            reprocess.StartInfo.CreateNoWindow = true;
-            reprocess.Start();
-            reprocess.StandardInput.WriteLine("adb install" + " " + Application.StartupPath + "\\com.huawei.KoBackup.apk");
-            reprocess.StandardInput.WriteLine("exit");
-            reprocess.StandardInput.AutoFlush = true;
-            reprocess.WaitForExit();//等待程序执行完退出进程
-            reprocess.Close();
-
             Process PreProcess = new Process();
             PreProcess = null;
             PreProcess = new Process();
@@ -90,6 +60,7 @@ namespace WinAppDemo.Forms
         private void Button3_Click(object sender, EventArgs e)
         {
             IList<string> imglist = new List<string>();
+            Program.m_mainform.IsBackup = true;        //新建备份
 
             string exePath = System.Windows.Forms.Application.StartupPath;
 
@@ -136,7 +107,7 @@ namespace WinAppDemo.Forms
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.CreateNoWindow = true;
                 process.Start();
-                process.StandardInput.WriteLine("adb pull sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/Appbackup");
+                process.StandardInput.WriteLine("adb pull sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/AppBackup");
                 process.StandardInput.WriteLine("exit");
                 process.StandardInput.AutoFlush = true;
                 string Conoutput = process.StandardOutput.ReadToEnd();
@@ -144,9 +115,9 @@ namespace WinAppDemo.Forms
                 process.Close();
                 Console.WriteLine(Conoutput);
 
-                if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencnet.mm.db"))
+                if (File.Exists(Program.m_mainform.g_workPath + "//AppBackup//com.tencnet.mm.db"))
                 {
-                    if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencent.mm.db"))
+                    if (File.Exists(Program.m_mainform.g_workPath + "//AppBackup//com.tencent.mm.db"))
                     {
                         MessageBox.Show("获取备份完成!", "提示");
                         Console.WriteLine("存在微信备份文件");
@@ -158,44 +129,18 @@ namespace WinAppDemo.Forms
                     }
                 }
 
+                this.Close();
+                //跳转到数据提取界面并执行微信备份解析程序
+                UcZjtq_SJ_QZ6 m_ucZjtq_sj_qz6 = new UcZjtq_SJ_QZ6();
 
-                //Process process = new System.Diagnostics.Process();
-                //process.StartInfo.FileName = "cmd.exe";
-                //process.StartInfo.UseShellExecute = false;
-                //process.StartInfo.RedirectStandardError = true;
-                //process.StartInfo.RedirectStandardInput = true;
-                //process.StartInfo.RedirectStandardOutput = true;
-                //process.StartInfo.CreateNoWindow = true;
-                //process.Start();
-                //process.StandardInput.WriteLine("adb pull sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/Appbackup");
-                //process.StandardInput.WriteLine("exit");
-                //process.StandardInput.AutoFlush = true;
-                //string Conoutput = process.StandardOutput.ReadToEnd();
-                //process.WaitForExit();//等待程序执行完退出进程
-                //process.Close();
-                //Console.WriteLine(Conoutput);
-                System.Diagnostics.Process reProcess = new System.Diagnostics.Process();
-                reProcess.StartInfo.Arguments = "sdcard/Huawei/Backup/backupFiles/" + Program.m_mainform.backupFileName + " " + Program.m_mainform.g_workPath + "/Appbackup";
-                Console.WriteLine(reProcess.StartInfo.Arguments);
-                reProcess.StartInfo.FileName = Application.StartupPath + "\\pullFileFromPhone.exe";
-                reProcess.StartInfo.Verb = "runas";
-                reProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                reProcess.Start();
-                reProcess.WaitForExit();
-                reProcess.Close();
-                Console.WriteLine("提取备份文件结束");
-                
-            }
-            if (File.Exists(Program.m_mainform.g_workPath + "//Appbackup//com.tencent.mm.db"))
-            {
-                Console.WriteLine("存在微信备份文件");
-                MessageBox.Show("提取备份文件完成");
-                return;
-            }
-            else
-            {
-                MessageBox.Show("不存在微信备份文件", "提示");
-                return;
+
+                AppContext.GetInstance().m_ucZjtq_sj.Controls.Clear();
+
+                m_ucZjtq_sj_qz6.Dock = DockStyle.Fill;
+                AppContext.GetInstance().m_ucZjtq_sj.Controls.Clear();
+                AppContext.GetInstance().m_ucZjtq_sj.Controls.Add(m_ucZjtq_sj_qz6);
+               // m_ucZjtq_sj_qz6.startGetData();   
+
             }
 
         }

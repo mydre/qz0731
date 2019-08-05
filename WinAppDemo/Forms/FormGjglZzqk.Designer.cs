@@ -173,7 +173,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormGjglZzqk";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "数据获取情况";
             this.Load += new System.EventHandler(this.FormGjglZzqx_Load);
             this.ResumeLayout(false);
